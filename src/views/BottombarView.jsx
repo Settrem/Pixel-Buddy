@@ -1,4 +1,3 @@
-
 import { PixelTextBox } from "../components/ui/PixelTextBox";
 
 function BottombarView(props){
