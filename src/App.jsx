@@ -4,7 +4,7 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 import { Sidebar } from './presenters/SidebarPresenter';
 import { Bottombar } from './presenters/BottombarPresenter';
 import { BORDERTHICKNESS } from './constants';
-import { TriviaView } from './views/TriviaView';
+import { Trivia } from './presenters/TriviaPresenter';
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
@@ -35,7 +35,7 @@ function makeRouter() {
     },
     {
       path: "/trivia",
-      element: <TriviaView/>,
+      element: <Trivia/>,
     },
     {
       path: "/joke",
