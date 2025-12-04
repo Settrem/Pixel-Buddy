@@ -49,7 +49,7 @@ function makeRouter() {
 }
 
 
-function App() {
+function App(props) {
   return (
     <div className="h-screen flex flex-col w-[100%]">
       <div className="flex-1 flex flex-col sm:flex-row">
@@ -62,7 +62,7 @@ function App() {
         </div>
         <Sidebar className="order-2 sm:order-1"
           sidebarButtons = {sidebarButtons}
-          name = {"MILOU"}
+          name = {props.userModel.buddyModel.name}
         ></Sidebar>
       </div>
       <Bottombar>Hello</Bottombar>
