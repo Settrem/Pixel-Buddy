@@ -1,2 +1,1 @@
-
 export const BORDERTHICKNESS = 8;

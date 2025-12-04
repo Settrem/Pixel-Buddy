@@ -38,3 +38,35 @@
 .read-the-docs {
   color: #888;
 }
+
+/* TRIVIA EXCLUSIVE */
+.trivia-center {
+  width: 1020px;          /* CONTROL THE AREA SIZE HERE */
+  margin: 0 auto;  
+  justify-content: center;
+  align-items: center;
+}
+
+.trivia-grid {
+  display: flex;
+  flex-wrap: wrap;            /* allow wrapping into rows */
+  justify-content: center;   /* center left/right */
+  align-items: center;        /* center up/down */
+  gap: 40px;
+}
+
+.trivia-question {
+  width: 420px;
+  height: 100px;
+  background-color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 6px;
+  border:black solid;
+  
+  font-size: clamp(10px, 2vw, 20px);
+  font-weight: bold;
+  text-align: center;
+}
