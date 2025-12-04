@@ -56,7 +56,7 @@ function App() {
         <div 
           className='flex-1 h-full border-[10px] order-0 border-black 
             sm:order-2 sm:border-l-[10px] 
-            bg-[url("https://i.imgflip.com/6gp1di.jpg")]
+            bg-[url("https://i.etsystatic.com/45204689/r/il/ced310/6211125952/il_794xN.6211125952_f666.jpg")]
             bg-cover bg-center'        >
           <RouterProvider router={makeRouter()}/>
         </div>

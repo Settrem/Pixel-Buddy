@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { TriviaView } from "../views/TriviaView";
-import { getCategories } from "../TriviaSource";
+import { getCategories } from "./TriviaSource";
 
 const Trivia = observer(
     function Trivia({ model }) {
