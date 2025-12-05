@@ -65,7 +65,7 @@ const App = observer(
     };
   
     if (!isLoggedIn) {
-      return <AuthenticationPage />;
+      return <AuthenticationPage/>;
     }
   
     return (

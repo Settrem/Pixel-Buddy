@@ -7,17 +7,20 @@ function InputFormView(props){
   }
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       {...props.form.map(formInputSectionCB)}
-      <PixelButton btnClickCB={sendFormACB}>OK</PixelButton>
+      <div className="mt-10 w-50">
+        <PixelButton btnClickCB={sendFormACB}>OK</PixelButton>
+      </div>
     </div>
   );
 
   function formInputSectionCB(formType){
     return(
-      <div>
-        <p>{formType.description}</p>
+      <div className="w-full">
+        <div className="w-full h-full text-[50px]">{formType.description}</div>
         <PixelInput
+          type={formType.type}
           value={formType.stateType}
           onChange={formType.setStateType} 
           placeholder={formType.placeholder}
