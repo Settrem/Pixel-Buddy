@@ -3,6 +3,7 @@ import { PixelTextBox } from './components/ui/PixelTextBox';
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import { Sidebar } from './presenters/SidebarPresenter';
 import { Bottombar } from './presenters/BottombarPresenter';
+import { HashRouter } from "react-router-dom";
 import { BORDERTHICKNESS } from './constants';
 import { TriviaView } from './views/TriviaView';
 import { useState } from 'react';

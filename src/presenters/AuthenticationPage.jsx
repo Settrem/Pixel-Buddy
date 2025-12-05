@@ -1,13 +1,14 @@
-import { LogInView } from "../views/LogInView";
-import { SignUpView } from "../views/SignUpView";
+
+import { SignUpPresenter } from "./SignUpPresenter";
+import { LogInPresenter } from "./LogInPresenter";
 
 
 function AuthenticationPage(props){
 
   return (
     <div className="">
-      <LogInView></LogInView>
-      <SignUpView></SignUpView>
+      <LogInPresenter></LogInPresenter>
+      <SignUpPresenter></SignUpPresenter>
     </div>
   );
 }
