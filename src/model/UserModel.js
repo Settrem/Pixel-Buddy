@@ -11,7 +11,7 @@ export const userModel = {
         clothesBottom: null,
         stats: {
             hunger: 100,
-            hapiness: 100,
+            happiness: 100,
             energy: 100,
         },
         lastTimeInteracted: null,
@@ -40,8 +40,8 @@ export const userModel = {
             this.stats.hunger += hungerLevel;
         },
     
-        addHapiness(funLevel){
-            this.stats.hapiness += funLevel;
+        addHappiness(funLevel){
+            this.stats.happiness += funLevel;
         },
     },
 }
