@@ -5,10 +5,15 @@ import { Sidebar } from './presenters/SidebarPresenter';
 import { Bottombar } from './presenters/BottombarPresenter';
 import { HashRouter } from "react-router-dom";
 import { BORDERTHICKNESS } from './constants';
+import { reaction } from "mobx";
 import { TriviaView } from './views/TriviaView';
 import { useState } from 'react';
+import { connectToPersistence } from './persistence/firestoreModel';
+import { useEffect } from 'react';
 import { AuthenticationPage } from './presenters/AuthenticationPage'; // create this component
 import { observer } from 'mobx-react-lite';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from './persistence/firestoreModel'; 
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
@@ -54,20 +59,34 @@ function makeRouter() {
 
 const App = observer(
   function App(props) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    
-    // simulate login function
-    const handleLogin = (username, password) => {
-      // TODO: replace with real authentication
-      if (username && password) {
-        setIsLoggedIn(true);
+    const [isReady, setIsReady] = useState(false);
+
+    useEffect(() => {
+  
+      if (auth.currentUser) {
+        connectToPersistence(props.userModel, reaction);
       }
-    };
-  
-    if (!props.userModel.user) {  //If null(not logged in) If undefined (loading)
-      return <AuthenticationPage/>;
-    }
-  
+      // Listen for login/logout events
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (user) {
+          console.log("User logged in:", user.uid);
+          connectToPersistence(props.userModel, reaction);
+        } else {
+          console.log("User logged out");
+        }
+        setIsReady(true); // auth state known
+      });
+      return () => unsubscribe();
+    }, []);
+
+    // Wait until we know the auth state
+    if (!isReady) return <div className="text-white">Loading...</div>;
+    // No logged-in user
+    if (!props.userModel.user) return <AuthenticationPage />;
+    // Wait until model is ready
+    if (!props.userModel.ready) return <div className="text-white">Loading user data...</div>;
+
+    // Logged in and model ready → show main app
     return (
       <div className="h-screen flex flex-col w-[100%]">
         <div className="flex-1 flex flex-col sm:flex-row">

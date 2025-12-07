@@ -1,7 +1,6 @@
-
 import { SignUpView } from "../views/SignUpView";
 import { useState } from "react";
-
+import { signUp } from "../persistence/firestoreModel";
 
 function SignUpPresenter(props){
     const [email, setEmail] = useState("");
@@ -10,6 +9,7 @@ function SignUpPresenter(props){
 
     function sendSignUpFormACB(){
         console.log(email+ " " + password + " " + buddyName);
+        signUp(email, password, buddyName);
     }
 
     return (

@@ -1,6 +1,6 @@
 import { LogInView } from "../views/LogInView";
 import { useState } from "react";
-
+import { logIn } from "../persistence/firestoreModel";
 
 function LogInPresenter(props){
     const [email, setEmail] = useState("");
@@ -9,6 +9,7 @@ function LogInPresenter(props){
 
     function sendLogInFormACB(){
         console.log(email+ " " + password);
+        logIn(email, password);
     }
 
     return (
