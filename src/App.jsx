@@ -64,7 +64,7 @@ const App = observer(
       }
     };
   
-    if (!isLoggedIn) {
+    if (!props.userModel.user) {  //If null(not logged in) If undefined (loading)
       return <AuthenticationPage/>;
     }
   
