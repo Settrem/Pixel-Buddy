@@ -78,3 +78,14 @@
   background: white;
   border: black solid;
 }
+.trivia-question.correct {
+  background-color: #5da360; /* Green */
+  color: black;
+  border-color: #5da360;
+}
+
+.trivia-question.wrong {
+  background-color: #9c5550; /* Red */
+  color: black;
+  border-color: #9c5550;
+}

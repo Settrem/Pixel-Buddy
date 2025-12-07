@@ -1,18 +1,15 @@
 import '../styles/App.css';
 
 export function TriviaView(props) {
-    
-    console.log("6. [View] Rendering with categories:", props.categories);
-
     return (
         <div>
             <div className="trivia-center">
                 <div className="trivia-grid">
-                    {props.categories && props.categories.map((category) => (
+                    {props.categories.map((category) => (
                         <button
                             key={category.id}
                             className="trivia-question"
-                            onClick={() => props.onChooseCategory(category.id)}
+                            onClick={() => props.chooseCategory(category.id)}
                         >
                             {category.name}
                         </button>
