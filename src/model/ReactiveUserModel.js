@@ -13,4 +13,5 @@ function updateInteractionTimeACB(){
 
 reaction(updateInteractionTimeACB, modelStatsChangedACB);
 
+window.myModel= reactiveUserModel;
 

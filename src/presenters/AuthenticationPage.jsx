@@ -9,9 +9,9 @@ function AuthenticationPage(props){
   return (
     <div className="flex align-center justify-center w-[100%] h-screen  bg-[rgb(84,92,158)]">
       {showSignUp ? (
-        <SignUpPresenter switchToLogInACB={() => setShowSignUp(false)} />
+        <SignUpPresenter switchToLogInCB={() => setShowSignUp(false)} />
       ) : (
-        <LogInPresenter switchToSignUpACB={() => setShowSignUp(true)} />
+        <LogInPresenter switchToSignUpCB={() => setShowSignUp(true)} />
       )}
     </div>
   );
