@@ -10,7 +10,7 @@ function InputFormView(props){
     <div className="flex flex-col items-center">
       {...props.form.map(formInputSectionCB)}
       <div className="mt-10 w-50">
-        <PixelButton btnClickCB={sendFormACB}>OK</PixelButton>
+        <PixelButton btnClickCB={sendFormACB}><p className="text-[60px] w-40 h-13 -mt-3">OK</p></PixelButton>
       </div>
     </div>
   );

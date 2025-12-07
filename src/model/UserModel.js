@@ -2,7 +2,9 @@
 const ENERGY_LOSS_PER_HOUR = 2;
 
 export const userModel = {
+    user: undefined,
     userName: "",
+    uiTheme: (84,92,158), //Blue
     buddyModel: {
         name: "MILOU",
         buddyType: null,
@@ -43,5 +45,9 @@ export const userModel = {
         addHappiness(funLevel){
             this.stats.happiness += funLevel;
         },
+    },
+
+    setUiThemeTo(rgb){
+        this.UiTheme = rgb;
     },
 }

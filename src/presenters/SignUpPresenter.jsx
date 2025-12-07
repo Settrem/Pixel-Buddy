@@ -41,16 +41,18 @@ function SignUpPresenter(props){
     }
 
     return (
-    <div className="w-[100%] h-fill p-[20px] bg-[rgb(84,92,158)] flex flex-col items-center">
-        <div className="text-[70px] fixed top-5">Sign Up</div>
-        <div className="w-[80%] fixed top-40">  
-            <InputFormView
-                form={signUpForm}
-                sendFormCB = {sendSignUpFormACB}
-            />
-        </div>
-        <div className="fixed bottom-3 text-[30px] cursor-pointer" onClick={props.switchToLogInACB}>  
-            Already have an account? Log In
+    <div className="w-[100%] border-[10px] border-black h-fill">
+        <div className="w-[100%] border-[5px] border-black/30 h-[100%] p-[20px] bg-[rgb(84,92,158)] flex flex-col items-center">
+            <div className="text-[70px] fixed top-8">Sign Up</div>
+            <div className="w-[80%] fixed top-42">  
+                <InputFormView
+                    form={signUpForm}
+                    sendFormCB = {sendSignUpFormACB}
+                />
+            </div>
+            <div className="fixed bottom-5 text-[30px] cursor-pointer" onClick={props.switchToLogInACB}>  
+                Already have an account? Log In
+            </div>
         </div>
     </div>
     );
