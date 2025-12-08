@@ -1,10 +1,19 @@
-
 import './styles/App.css'
 import { PixelTextBox } from './components/ui/PixelTextBox';
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import { Sidebar } from './presenters/SidebarPresenter';
 import { Bottombar } from './presenters/BottombarPresenter';
+import { HashRouter } from "react-router-dom";
 import { BORDERTHICKNESS } from './constants';
+import { reaction } from "mobx";
+import { TriviaView } from './views/TriviaView';
+import { useState } from 'react';
+import { connectToPersistence } from './persistence/firestoreModel';
+import { useEffect } from 'react';
+import { AuthenticationPage } from './presenters/AuthenticationPage'; // create this component
+import { observer } from 'mobx-react-lite';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from './persistence/firestoreModel'; 
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
@@ -35,7 +44,7 @@ function makeRouter() {
     },
     {
       path: "/trivia",
-      element: <PixelTextBox>trivia</PixelTextBox>,
+      element: <div/>,
     },
     {
       path: "/joke",
@@ -48,24 +57,55 @@ function makeRouter() {
   ]);
 }
 
+const App = observer(
+  function App(props) {
+    const [isReady, setIsReady] = useState(false);
 
-function App() {
-  return (
-    <div className="h-screen flex flex-col w-[100%]">
-      <div className="flex-1 flex flex-col sm:flex-row">
-        <div 
-          className='flex-1 bg-red-500 h-full border-[10px] order-0 border-black sm:order-2 sm:border-l-[10px]'
-          >
-          
+    useEffect(() => {
+  
+      if (auth.currentUser) {
+        connectToPersistence(props.userModel, reaction);
+      }
+      // Listen for login/logout events
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (user) {
+          console.log("User logged in:", user.uid);
+          connectToPersistence(props.userModel, reaction);
+        } else {
+          console.log("User logged out");
+        }
+        setIsReady(true); // auth state known
+      });
+      return () => unsubscribe();
+    }, []);
+
+    // Wait until we know the auth state
+    if (!isReady) return <div className="text-white">Loading...</div>;
+    // No logged-in user
+    if (!props.userModel.user) return <AuthenticationPage />;
+    // Wait until model is ready
+    if (!props.userModel.ready) return <div className="text-white">Loading user data...</div>;
+
+    // Logged in and model ready → show main app
+    return (
+      <div className="h-screen flex flex-col w-[100%]">
+        <div className="flex-1 flex flex-col sm:flex-row">
+          <div 
+            className='flex-1 h-full border-[10px] order-0 border-black 
+              sm:order-2 sm:border-l-[10px] 
+              bg-[url("https://i.imgflip.com/6gp1di.jpg")]
+              bg-cover bg-center'        >
+            <RouterProvider router={makeRouter()}/>
+          </div>
+          <Sidebar className="order-2 sm:order-1"
+            sidebarButtons = {sidebarButtons}
+            name = {props.userModel.buddyModel.name}
+          ></Sidebar>
         </div>
-        <Sidebar className="order-2 sm:order-1"
-          sidebarButtons = {sidebarButtons}
-          name = {"MILOU"}
-        ></Sidebar>
+        <Bottombar>{props.interfaceModel.TextBox}</Bottombar>
       </div>
-      <Bottombar>Hello</Bottombar>
-    </div>
-  );
-}
+    );
+  }
+)
 
 export default App
