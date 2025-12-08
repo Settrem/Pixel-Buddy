@@ -3,6 +3,8 @@
 1. Short Description
 PixelBuddy is a virtual pet web application built using React and the Model-View-Presenter (MVP) architecture. Users take care of a digital companion by managing stats like Hunger, Energy, and Happiness through mini-games and interactions. The project utilizes MobX for state management and Firebase for persistence.
 
+Not all code is in the main file but on different branches. The uploaded version is currently the most stable.
+
 2. What We Have Done
 - Initialized the project structure using React and Vite.
 - Established the MVP (Model-View-Presenter) architectural pattern.
