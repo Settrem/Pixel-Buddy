@@ -73,19 +73,22 @@
   font-weight: bold;
   text-align: center;
 }
+.trivia-next {
+  width: 420px;
+  height: 75px;
+  margin-top: 20px;
+  background-color: aliceblue;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 6px;
+  border: black solid;
+
+  font-size: clamp(10px, 2vw, 20px);
+  text-align: center;
+}
 .trivia-text {
   margin-top: 50px;
   background: white;
   border: black solid;
-}
-.trivia-question.correct {
-  background-color: #5da360; /* Green */
-  color: black;
-  border-color: #5da360;
-}
-
-.trivia-question.wrong {
-  background-color: #9c5550; /* Red */
-  color: black;
-  border-color: #9c5550;
 }
