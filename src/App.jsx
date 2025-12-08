@@ -5,6 +5,9 @@ import { Sidebar } from './presenters/SidebarPresenter';
 import { Bottombar } from './presenters/BottombarPresenter';
 import { HashRouter } from "react-router-dom";
 import { BORDERTHICKNESS } from './constants';
+<<<<<<< HEAD
+import { Trivia } from './presenters/TriviaPresenter';
+=======
 import { reaction } from "mobx";
 import { TriviaView } from './views/TriviaView';
 import { useState } from 'react';
@@ -14,6 +17,7 @@ import { AuthenticationPage } from './presenters/AuthenticationPage'; // create 
 import { observer } from 'mobx-react-lite';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './persistence/firestoreModel'; 
+>>>>>>> Firebase-User-Atuhentication-Development
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
@@ -44,7 +48,11 @@ function makeRouter() {
     },
     {
       path: "/trivia",
+<<<<<<< HEAD
+      element: <Trivia/>,
+=======
       element: <div/>,
+>>>>>>> Firebase-User-Atuhentication-Development
     },
     {
       path: "/joke",
@@ -61,6 +69,18 @@ const App = observer(
   function App(props) {
     const [isReady, setIsReady] = useState(false);
 
+<<<<<<< HEAD
+function App() {
+  return (
+    <div className="h-screen flex flex-col w-[100%]">
+      <div className="flex-1 flex flex-col sm:flex-row">
+        <div 
+          className='flex-1 h-full border-[10px] order-0 border-black 
+            sm:order-2 sm:border-l-[10px] 
+            bg-[url("https://i.etsystatic.com/45204689/r/il/ced310/6211125952/il_794xN.6211125952_f666.jpg")]
+            bg-cover bg-center'        >
+          <RouterProvider router={makeRouter()}/>
+=======
     useEffect(() => {
   
       if (auth.currentUser) {
@@ -101,6 +121,7 @@ const App = observer(
             sidebarButtons = {sidebarButtons}
             name = {props.userModel.buddyModel.name}
           ></Sidebar>
+>>>>>>> Firebase-User-Atuhentication-Development
         </div>
         <Bottombar>{props.interfaceModel.TextBox}</Bottombar>
       </div>
