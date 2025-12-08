@@ -1,0 +1,132 @@
+import {getFirestore, doc, setDoc, getDoc} from "firebase/firestore";
+import { firebaseConfig } from "./firebaseConfig";
+import { getAuth } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+
+const app= initializeApp(firebaseConfig);
+const db= getFirestore(app);
+const auth = getAuth(app);
+
+//auth.currentUser   The current user when logged in
+async function signUp(email, password, buddyName) {
+    try {
+        // 1. Create the Firebase Auth user
+        const userCredential = await createUserWithEmailAndPassword( auth, email, password );
+        const user = userCredential.user;
+        const userDocument = doc(db, "users", user.uid);
+
+        //set buddyname 
+        await setDoc(userDocument, {
+                user: { uid: user.uid, email: email },
+                buddyModel: {
+                    name: buddyName,
+                    buddyType: null,
+                    clothesHat: null,
+                    clothesTop: null,
+                    clothesBottom: null,
+                    stats: { hunger: 100, happiness: 100, energy: 100 },
+                    lastTimeInteracted: new Date(),
+                },
+                uiTheme: [84,92,158],
+        });
+        console.log("User created, saved, and logged in!");
+
+    } catch (error) {
+        console.error("Sign up failed:", error);
+    }
+}
+
+async function logIn(email, password) {
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+        console.log("Logged in successfully!");
+    } catch (error) {
+        console.error("Login error:", error);
+    }
+}
+
+function connectToPersistence(model, watchFunction){
+    model.ready = false;
+
+    // Safety check: user must be logged in
+    if (!auth.currentUser) {
+        console.log("No logged-in user. Cannot connect to persistence.");
+        return;
+    }
+
+    const ref = doc(db, "users", auth.currentUser.uid);
+
+    async function loadModelFromFirestore() {
+        try {
+            const snapshot = await getDoc(ref);
+
+            if (!snapshot.exists()) {
+                console.warn("User document does not exist yet.");
+                model.ready = true;
+                return;
+            }
+
+            const data = snapshot.data();
+            console.log("Loaded Firestore model:", data);
+
+            model.user = data.user || null;
+            model.buddyModel = { 
+                ...model.buddyModel,
+                ...data.buddyModel,
+                stats: {
+                    ...model.buddyModel.stats,
+                    ...data.buddyModel?.stats
+                },
+                lastTimeInteracted: 
+                data.buddyModel?.lastTimeInteracted instanceof Date
+                ? data.buddyModel.lastTimeInteracted
+                : data.buddyModel?.lastTimeInteracted?.toDate() ?? new Date(),
+            };
+            model.uiTheme = data.uiTheme || [84, 92, 158];
+
+            model.ready = true;
+
+            } catch (error) {
+            console.error("Error loading Firestore model:", error);
+        }
+    }
+
+    loadModelFromFirestore();
+
+    function modelPropertyChangeACB() {
+        return [
+            model.buddyModel.name,
+            model.buddyModel.stats.hunger,
+            model.buddyModel.stats.happiness,
+            model.buddyModel.stats.energy,
+            model.buddyModel.clothesHat,
+            model.buddyModel.clothesTop,
+            model.buddyModel.clothesBottom,
+            model.uiTheme
+        ];
+    }
+
+    async function updateModelInDatabaseACB(){
+        if(!model.ready) return;
+
+        const { name, buddyType, clothesHat, clothesTop, clothesBottom, stats, lastTimeInteracted } = model.buddyModel;
+
+        const dataToSave = {
+            user: model.user,
+            buddyModel: { name, buddyType, clothesHat, clothesTop, clothesBottom, stats, lastTimeInteracted },
+            uiTheme: model.uiTheme,
+        };
+
+        try {
+            await setDoc(ref, dataToSave, {merge : true });
+        } catch (error) {
+            console.error("Firestore update error:", error);
+        }
+    }
+
+    watchFunction(modelPropertyChangeACB, updateModelInDatabaseACB);
+}
+
+
+export { auth, signUp, logIn, connectToPersistence };

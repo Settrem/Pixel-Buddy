@@ -18,8 +18,8 @@ function SidebarView(props) {
         }
 
         return(
-            <CarouselItem className="pt-1 basis-1/2 sm:basis-1/4">
-                <PixelButton key={btn.path} path={btn.path} btnClickCB={sidebarButtonClickedACB}>
+            <CarouselItem key={btn.path} className="pt-1 basis-1/2 sm:basis-1/4">
+                <PixelButton path={btn.path} btnClickCB={sidebarButtonClickedACB}>
                     {btn.type}
                 </PixelButton>
             </CarouselItem>
