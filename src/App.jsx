@@ -44,7 +44,7 @@ function makeRouter() {
     },
     {
       path: "/trivia",
-      element: <TriviaView/>,
+      element: <div/>,
     },
     {
       path: "/joke",
