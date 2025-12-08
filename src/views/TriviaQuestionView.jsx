@@ -7,7 +7,7 @@ function decodeHtml(html) {
     return txt.value;
 }
 
-export function TriviaQuestionView({ question, onAnswer, onNextQuestion, selectedAnswer }) {
+export function TriviaQuestionView({ question, onAnswer, onNextQuestion, selectedAnswer, currentIndex, totalQuestions }) {
     const [shuffledAnswers, setShuffledAnswers] = useState([]);
 
     useEffect(() => {
@@ -17,15 +17,13 @@ export function TriviaQuestionView({ question, onAnswer, onNextQuestion, selecte
         setShuffledAnswers(allAnswers.sort(() => Math.random() - 0.5));
     }, [question]);
 
-    function setButtonClass(answer) {
-        if (!selectedAnswer) return "trivia-question";
+    function getButtonColor(answer) {
+        if (!selectedAnswer) return "black";
+
         if (answer === question.correct_answer) {
-            return "trivia-question correct";
+            return "#37a33dff";
         }
-        if (answer === selectedAnswer) {
-            return "trivia-question wrong";
-        }
-        return "trivia-question dimmed";
+        return "#c02e24ff";
     }
 
     function handleAnswerClick(answer) {
@@ -35,12 +33,17 @@ export function TriviaQuestionView({ question, onAnswer, onNextQuestion, selecte
 
     return (
         <div>
+            <div className="trivia-text" style={{ marginBottom: "10px" }}>
+                Question {currentIndex + 1} of {totalQuestions}
+            </div>
+
             <div className="trivia-center">
                 <div className="trivia-grid">
                     {shuffledAnswers.map((answer, index) => (
                         <button
                             key={index}
                             className="trivia-question"
+                            style={{ color: getButtonColor(answer) }}
                             onClick={() => handleAnswerClick(answer)}
                             disabled={selectedAnswer !== null}
                         >
@@ -49,25 +52,26 @@ export function TriviaQuestionView({ question, onAnswer, onNextQuestion, selecte
                     ))}
                 </div>
             </div>
-            <div className="trivia-text">
+                        <div className="trivia-text">
                 {!selectedAnswer ? (
                     <p>{decodeHtml(question.question)}</p>
                 ) : (
-                    <p style={{ fontWeight: "bold", fontSize: "2em" }}>
+                    <p style={{ fontWeight: "bold", fontSize: "em" }}>
                         {selectedAnswer === question.correct_answer ? "Correct!" : "Incorrect!"}
                     </p>
                 )}
             </div>
+
             {selectedAnswer && (
-                <div className="trivia-center" style={{ marginTop: "20px" }}>
+                <div className="trivia-center">
                     <button
-                        className="trivia-question"
+                        className="trivia-next"
                         onClick={onNextQuestion}
                     >
-                        Next Question →
+                        {currentIndex + 1 === totalQuestions ? "See Results" : "Next Question →"}
                     </button>
                 </div>
             )}
         </div>
-    );
+    );      
 }
