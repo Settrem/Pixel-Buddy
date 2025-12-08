@@ -6,7 +6,7 @@ import { Bottombar } from './presenters/BottombarPresenter';
 import { HashRouter } from "react-router-dom";
 import { BORDERTHICKNESS } from './constants';
 import { reaction } from "mobx";
-import { Trivia } from './views/TriviaPresenter';
+import { Trivia } from './presenters/TriviaPresenter';
 import { useState } from 'react';
 import { connectToPersistence } from './persistence/firestoreModel';
 import { useEffect } from 'react';
