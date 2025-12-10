@@ -12,11 +12,13 @@ const Sidebar = observer(
         }
 
         return(
-            <SidebarView
-                sidebarButtons ={props.sidebarButtons}
-                buttonClickedCB = {clickSidebarButtonACB}
-                name = {props.name}
-            ></SidebarView>
+            <div className="h-fill">
+                <SidebarView
+                    sidebarButtons ={props.sidebarButtons}
+                    buttonClickedCB = {clickSidebarButtonACB}
+                    name = {props.name}
+                ></SidebarView>
+            </div>
         );
     }
 );

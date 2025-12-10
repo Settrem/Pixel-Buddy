@@ -27,7 +27,7 @@ function SidebarView(props) {
     }
 
     return (
-        <div className="bg-[rgb(84,92,158)] flex flex-col items-center border-[10px] border-y-0 border-black w-[100%] sm:border-y-[10px] sm:border-r-0 sm:px-[30px] sm:w-[300px] sm:h-[640px]">
+        <div className="bg-[rgb(84,92,158)] flex flex-col items-center border-[10px] border-y-0 border-black w-[100%] sm:border-y-[10px] sm:border-r-0 sm:px-[30px] sm:w-[300px] sm:h-[100%]">
             
             <div className="text-[40px] sm:text-[60px]  sm:-mt-3">{props.name}</div>
             

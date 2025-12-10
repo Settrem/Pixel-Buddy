@@ -17,8 +17,8 @@ function InputFormView(props){
 
   function formInputSectionCB(formType){
     return(
-      <div className="w-full">
-        <div className="w-full h-full text-[50px]">{formType.description}</div>
+      <div className="w-full flex flex-col">
+        <div className="w-full h-max">{formType.description}</div>
         <PixelInput
           type={formType.type}
           value={formType.stateType}
