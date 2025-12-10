@@ -1,11 +1,11 @@
-import '../styles/App.css';
+import '../../styles/App.css';
 
 export function TriviaResultView({ score, total, onRestart }) {
     return (
-        <div className="trivia-center">
-            <div className="trivia-text">
+        <div>
+            <div className="trivia-center" style={{ fontSize: "3em" }}>
                 <h1>Game Over!</h1>
-                <p style={{ fontSize: "1.5em" }}>
+                <p>
                     You scored <strong>{score}</strong> out of <strong>{total}</strong>
                 </p>
             </div>

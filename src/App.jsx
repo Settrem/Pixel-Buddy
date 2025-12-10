@@ -24,7 +24,7 @@ const sidebarButtons = [
     { path: "clothes", type: "CLOTHES", },
 ];
 
-function makeRouter() {
+function makeRouter(props) {
   return createHashRouter([
     {
       path: "/",
@@ -44,7 +44,7 @@ function makeRouter() {
     },
     {
       path: "/trivia",
-      element: <Trivia/>,
+      element: <Trivia interfaceModel={props.interfaceModel}/>,
     },
     {
       path: "/joke",
@@ -95,7 +95,7 @@ const App = observer(
               sm:order-2 sm:border-l-[10px] 
               bg-[url("https://i.imgflip.com/6gp1di.jpg")]
               bg-cover bg-center'        >
-            <RouterProvider router={makeRouter()}/>
+            <RouterProvider router={makeRouter(props)}/>
           </div>
           <Sidebar className="order-2 sm:order-1"
             sidebarButtons = {sidebarButtons}
