@@ -33,7 +33,7 @@ function PixelButton(props){
                 }}
             />
             <div 
-                className="w-full text-black text-4xl select-none p-[5px] px-[10px]" 
+                className="w-full text-black select-none p-[5px] px-[10px]" 
                 style={{
                     backgroundColor: bgColor,
                     borderStyle: "solid",

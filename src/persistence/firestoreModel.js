@@ -1,5 +1,6 @@
 import {getFirestore, doc, setDoc, getDoc} from "firebase/firestore";
 import { firebaseConfig } from "./firebaseConfig";
+import { signOut } from "firebase/auth";
 import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
@@ -43,6 +44,15 @@ async function logIn(email, password) {
         console.log("Logged in successfully!");
     } catch (error) {
         console.error("Login error:", error);
+    }
+}
+
+async function logOut() {
+    try {
+        await signOut(auth);
+        console.log("Logged out successfully!");
+    } catch (error) {
+        console.error("Logout failed:", error);
     }
 }
 
@@ -129,4 +139,4 @@ function connectToPersistence(model, watchFunction){
 }
 
 
-export { auth, signUp, logIn, connectToPersistence };
+export { auth, signUp, logIn, connectToPersistence, logOut };

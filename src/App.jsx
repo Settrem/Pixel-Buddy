@@ -90,7 +90,7 @@ const App = observer(
     // Logged in and model ready → show main app
     return (
       <div className="h-screen flex flex-col w-[100%]">
-        <div className="flex-1 flex flex-col sm:flex-row">
+        <div className="flex-1 sm:max-h-[650px] flex flex-col sm:flex-row">
           <div 
             className='flex-1 h-full border-[10px] order-0 border-black 
               sm:order-2 sm:border-l-[10px] 
