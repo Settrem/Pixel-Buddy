@@ -9,10 +9,10 @@ export function TriviaStartView(props) {
     bottomTextBarACB("Welcome To Trivia. Are you ready? Once you go in there's no coming back..");
 
     return (
-        <div className="trivia-center">
-            <div className="trivia-grid">
+        <div className="trivia-grid">
+            <div>
                 <button
-                    className="trivia-question"
+                    className="trivia-btn"
                     onClick={() => props.triviaStarter()}
                 >
                     Start Trivia!

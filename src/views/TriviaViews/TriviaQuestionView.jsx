@@ -1,3 +1,8 @@
+//TODO
+/**
+ * Make it follow the MVP formula by moving a lot of the functions into TriviaPresenter
+ */
+
 import { useState, useEffect } from "react";
 import '../../styles/App.css';
 
@@ -40,16 +45,16 @@ export function TriviaQuestionView({ setBottomText, question, onAnswer, onNextQu
 
     return (
         <div>
-            <div className="trivia-center" style={{ fontSize: "3em" }}>
+            <div className="trivia-text">
                 Question {currentIndex + 1} of {totalQuestions}
             </div>
 
-            <div className="trivia-center">
+            <div>
                 <div className="trivia-grid">
                     {shuffledAnswers.map((answer, index) => (
                         <button
                             key={index}
-                            className="trivia-question"
+                            className="trivia-btn"
                             style={{ color: getButtonColor(answer) }}
                             onClick={() => handleAnswerClick(answer)}
                             disabled={selectedAnswer !== null}
@@ -63,18 +68,16 @@ export function TriviaQuestionView({ setBottomText, question, onAnswer, onNextQu
                 {!selectedAnswer ? (
                     null
                 ) : (
-                    <div className="trivia-text">
-                    <p style={{ fontSize: "3em" }}>
+                    <p className = "trivia-text">
                         {selectedAnswer === question.correct_answer ? "Correct!" : "Incorrect!"}
                     </p>
-                    </div>
                 )}
             </div>
 
             {selectedAnswer && (
-                <div className="trivia-center">
+                <div>
                     <button
-                        className="trivia-next"
+                        className="trivia-btn trivia-next"
                         onClick={onNextQuestion}
                     >
                         {currentIndex + 1 === totalQuestions ? "See Results" : "Next Question →"}

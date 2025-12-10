@@ -5,6 +5,9 @@ import { TriviaQuestionView } from "../views/TriviaViews/TriviaQuestionView";
 import { TriviaResultView } from "../views/TriviaViews/TriviaResultView";
 import { TriviaStartView } from "../views/TriviaViews/TriviaStartView";
 import { chosenCategory, getCategories } from "../triviaSource";
+/** TODO
+ * CLEAN UP AND REFORM
+ */
 
 const Trivia = observer(
     function Trivia(props) {
