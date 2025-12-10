@@ -14,6 +14,9 @@ import { AuthenticationPage } from './presenters/AuthenticationPage'; // create 
 import { observer } from 'mobx-react-lite';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './persistence/firestoreModel'; 
+import { Buddy } from './presenters/BuddyPresenter.jsx';
+import { Clothes } from './presenters/ClothesPresenter.jsx';
+import { userModel } from './model/UserModel.js';
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
@@ -24,7 +27,7 @@ const sidebarButtons = [
     { path: "clothes", type: "CLOTHES", },
 ];
 
-function makeRouter() {
+function makeRouter(props) {
   return createHashRouter([
     {
       path: "/",
@@ -32,7 +35,9 @@ function makeRouter() {
     },
     {
       path: "/buddy",
-      element: <PixelTextBox>buddy</PixelTextBox>,
+      element: <Buddy
+      model = {props.userModel}
+      />,
     },
     {
       path: "/settings",
@@ -52,7 +57,9 @@ function makeRouter() {
     },
     {
       path: "/clothes",
-      element: <PixelTextBox>clothes</PixelTextBox>,
+      element: <Clothes
+      model = {props.userModel}
+      />,
     }
   ]);
 }
@@ -95,7 +102,7 @@ const App = observer(
               sm:order-2 sm:border-l-[10px] 
               bg-[url("https://i.imgflip.com/6gp1di.jpg")]
               bg-cover bg-center'        >
-            <RouterProvider router={makeRouter()}/>
+            <RouterProvider router={makeRouter(props)}/>
           </div>
           <Sidebar className="order-2 sm:order-1"
             sidebarButtons = {sidebarButtons}
