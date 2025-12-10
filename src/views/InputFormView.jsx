@@ -4,13 +4,17 @@ import { PixelButton } from "../components/ui/PixelButton";
 function InputFormView(props){
   function sendFormACB(){
       props.sendFormCB(props);
+      // Reset all input fields in this form
+      props.form.forEach(field => {
+          field.setStateType("");
+      });
   }
 
   return (
     <div className="flex flex-col items-center">
       {...props.form.map(formInputSectionCB)}
       <div className="w-50 flex items-center mt-5">
-        <PixelButton btnClickCB={sendFormACB}><div className="text-[40px] w-fill h-10 flex flex-row align-center items-center"><p className="w-full">SEND!</p></div></PixelButton>
+        <PixelButton btnClickCB={sendFormACB}><div className="text-[40px] w-fill h-10 flex flex-row align-center items-center"><p className="w-full">{props.children}</p></div></PixelButton>
       </div>
     </div>
   );

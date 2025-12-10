@@ -23,7 +23,6 @@ const Settings = observer(
         }
         
         function changeBuddyNameACB(){
-            console.log("Helfdflo");
             props.userModel.buddyModel.name = buddyName;
         }
 

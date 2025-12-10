@@ -45,6 +45,7 @@ function SignUpView(props){
                 <InputFormView
                     form={signUpForm}
                     sendFormCB = {sendSignUpFormACB}
+                    children = {"Sign up"}
                 />
             </div>
             <div className="fixed bottom-5 text-[30px] cursor-pointer" onClick={props.switchToLogInACB}>  

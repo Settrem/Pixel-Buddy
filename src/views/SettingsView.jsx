@@ -35,7 +35,7 @@ function SettingsView(props) {
                     <div className="flex flex-col items-center">
                         <div className="">LOG OUT ?</div>
                         <div className="w-max flex items-center">
-                            <PixelButton btnClickCB={logOutACB}><div className="text-[40px] w-fill h-10 flex flex-row align-center items-center"><p className="w-full">LOG OUT</p></div></PixelButton>
+                            <PixelButton btnClickCB={logOutACB}><div className="text-[40px] w-fill h-10 flex flex-row align-center items-center"><p className="w-full">Log <O></O>ut</p></div></PixelButton>
                         </div>
                     </div>
                     <div className="w-fill flex items-center flex-col">
@@ -47,7 +47,9 @@ function SettingsView(props) {
                     <InputFormView
                         form={buddyNameForm}
                         sendFormCB = {sendNewBuddyNameACB}
-                    />
+                        children = {"CHANGE!"}
+                    >
+                    </InputFormView>
                 </div>
             </div>
         </div>
