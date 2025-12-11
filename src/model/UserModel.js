@@ -1,3 +1,4 @@
+import { customs } from "./buddyCustomizations";
 import { isRGBArray } from "../lib/utils";
 
 const ENERGY_LOSS_PER_HOUR = 2;
@@ -11,6 +12,7 @@ export const userModel = {
         clothesHat: null,
         clothesTop: null,
         clothesBottom: null,
+        clothesShoes: null,
         stats: {
             hunger: 100,
             happiness: 100,
@@ -45,6 +47,14 @@ export const userModel = {
         addHappiness(funLevel){
             this.stats.happiness += funLevel;
         },
+
+        changeClothes(type, value){
+            const validTypes = ["buddyType", "clothesHat", "clothesTop", "clothesBottom", "clothesShoes"]
+            if(!validTypes.includes(type)) return;
+            this[type] += value;
+            if (this[type] > customs[type].length - 1) this[type] = 0;
+            if (this[type] < 0) this[type] = customs[type].length - 1;
+        }
     },
 
     setUiThemeTo(rgb){

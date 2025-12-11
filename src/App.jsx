@@ -14,6 +14,9 @@ import { AuthenticationPage } from './presenters/AuthenticationPage'; // create 
 import { observer } from 'mobx-react-lite';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './persistence/firestoreModel';
+import { Buddy } from './presenters/BuddyPresenter.jsx';
+import { Clothes } from './presenters/ClothesPresenter.jsx';
+import { userModel } from './model/UserModel.js';
 import { Settings } from './presenters/SettingsPresenter';
 
 const sidebarButtons = [
@@ -33,7 +36,9 @@ function makeRouter(props) {
     },
     {
       path: "/buddy",
-      element: <PixelTextBox>buddy</PixelTextBox>,
+      element: <Buddy
+      model = {props.userModel}
+      />,
     },
     {
       path: "/settings",
@@ -53,7 +58,9 @@ function makeRouter(props) {
     },
     {
       path: "/clothes",
-      element: <PixelTextBox>clothes</PixelTextBox>,
+      element: <Clothes
+      model = {props.userModel}
+      />,
     }
   ]);
 }

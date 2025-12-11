@@ -22,10 +22,11 @@ async function signUp(email, password, buddyName) {
                 user: { uid: user.uid, email: email },
                 buddyModel: {
                     name: buddyName,
-                    buddyType: null,
-                    clothesHat: null,
-                    clothesTop: null,
-                    clothesBottom: null,
+                    buddyType: 0,
+                    clothesHat: 0,
+                    clothesTop: 0,
+                    clothesBottom: 0,
+                    clothesShoes: 0,
                     stats: { hunger: 100, happiness: 100, energy: 100 },
                     lastTimeInteracted: new Date(),
                 },
@@ -113,6 +114,7 @@ function connectToPersistence(model, watchFunction){
             model.buddyModel.clothesHat,
             model.buddyModel.clothesTop,
             model.buddyModel.clothesBottom,
+            model.buddyModel.clothesShoes,
             model.uiTheme
         ];
     }
@@ -120,11 +122,11 @@ function connectToPersistence(model, watchFunction){
     async function updateModelInDatabaseACB(){
         if(!model.ready) return;
 
-        const { name, buddyType, clothesHat, clothesTop, clothesBottom, stats, lastTimeInteracted } = model.buddyModel;
+        const { name, buddyType, clothesHat, clothesTop, clothesBottom, clothesShoes, stats, lastTimeInteracted } = model.buddyModel;
 
         const dataToSave = {
             user: model.user,
-            buddyModel: { name, buddyType, clothesHat, clothesTop, clothesBottom, stats, lastTimeInteracted },
+            buddyModel: { name, buddyType, clothesHat, clothesTop, clothesBottom, clothesShoes, stats, lastTimeInteracted },
             uiTheme: model.uiTheme,
         };
 
