@@ -13,7 +13,7 @@ export function TriviaStartView(props) {
             <div>
                 <button
                     className="cool-btn"
-                    onClick={() => props.triviaStarter()}
+                    onClick={() => props.triviaStartView()}
                 >
                     Start Trivia!
                 </button>
