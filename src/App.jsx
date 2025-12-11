@@ -45,7 +45,7 @@ function makeRouter(props) {
     },
     {
       path: "/trivia",
-      element: <Trivia/>,
+      element: <Trivia interfaceModel={props.interfaceModel}/>,
     },
     {
       path: "/joke",

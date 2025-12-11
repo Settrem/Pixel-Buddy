@@ -1,5 +1,10 @@
+//TODO
+/**
+ * Make it follow the MVP formula by moving a lot of the functions into TriviaPresenter
+ */
+
 import { useState, useEffect } from "react";
-import '../styles/App.css';
+import '../../styles/App.css';
 
 function decodeHtml(html) {
     const txt = document.createElement("textarea");
@@ -7,8 +12,15 @@ function decodeHtml(html) {
     return txt.value;
 }
 
-export function TriviaQuestionView({ question, onAnswer, onNextQuestion, selectedAnswer, currentIndex, totalQuestions }) {
+export function TriviaQuestionView({ setBottomText, question, onAnswer, onNextQuestion, selectedAnswer, currentIndex, totalQuestions }) {
     const [shuffledAnswers, setShuffledAnswers] = useState([]);
+
+    useEffect(() => {
+        if (question) {
+            const questionText = decodeHtml(question.question);
+            setBottomText(questionText);
+        }
+    }, [question, setBottomText]);
 
     useEffect(() => {
         if (!question) return;
@@ -33,16 +45,16 @@ export function TriviaQuestionView({ question, onAnswer, onNextQuestion, selecte
 
     return (
         <div>
-            <div className="trivia-text" style={{ marginBottom: "10px" }}>
+            <div className="trivia-text">
                 Question {currentIndex + 1} of {totalQuestions}
             </div>
 
-            <div className="trivia-center">
+            <div>
                 <div className="trivia-grid">
                     {shuffledAnswers.map((answer, index) => (
                         <button
                             key={index}
-                            className="trivia-question"
+                            className="trivia-btn"
                             style={{ color: getButtonColor(answer) }}
                             onClick={() => handleAnswerClick(answer)}
                             disabled={selectedAnswer !== null}
@@ -52,20 +64,20 @@ export function TriviaQuestionView({ question, onAnswer, onNextQuestion, selecte
                     ))}
                 </div>
             </div>
-                        <div className="trivia-text">
+            <div>
                 {!selectedAnswer ? (
-                    <p>{decodeHtml(question.question)}</p>
+                    null
                 ) : (
-                    <p style={{ fontWeight: "bold", fontSize: "em" }}>
+                    <p className = "trivia-text">
                         {selectedAnswer === question.correct_answer ? "Correct!" : "Incorrect!"}
                     </p>
                 )}
             </div>
 
             {selectedAnswer && (
-                <div className="trivia-center">
+                <div>
                     <button
-                        className="trivia-next"
+                        className="trivia-btn trivia-next"
                         onClick={onNextQuestion}
                     >
                         {currentIndex + 1 === totalQuestions ? "See Results" : "Next Question →"}
@@ -73,5 +85,5 @@ export function TriviaQuestionView({ question, onAnswer, onNextQuestion, selecte
                 </div>
             )}
         </div>
-    );      
+    );
 }
