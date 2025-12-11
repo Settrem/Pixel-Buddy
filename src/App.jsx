@@ -15,6 +15,7 @@ import { observer } from 'mobx-react-lite';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './persistence/firestoreModel';
 import { Buddy } from './presenters/BuddyPresenter.jsx';
+import { BuddyWeather } from './presenters/BuddyWeatherPresenter.jsx';
 import { Clothes } from './presenters/ClothesPresenter.jsx';
 import { userModel } from './model/UserModel.js';
 import { Settings } from './presenters/SettingsPresenter';
@@ -37,8 +38,9 @@ function makeRouter(props) {
     },
     {
       path: "/buddy",
-      element: <Buddy
-      model = {props.userModel}
+      element: <BuddyWeather
+        model = {props.userModel}
+        interfaceModel={props.interfaceModel}
       />,
     },
     {
