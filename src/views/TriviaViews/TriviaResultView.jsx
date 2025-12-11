@@ -21,7 +21,7 @@ export function TriviaResultView( {score, total }) {
             </p>
             <div>
                 <button
-                    className="trivia-btn"
+                    className="cool-btn"
                     onClick={() => props.triviaStart()}
                 >
                     Back To Buddy!

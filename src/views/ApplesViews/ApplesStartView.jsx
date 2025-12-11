@@ -1,23 +1,22 @@
 import '../../styles/App.css';
 
-export function TriviaStartView(props) {
+export function ApplesStartView(props) {
 
     function bottomTextBarACB(message) {
         props.setBottomText(message);
     }
 
-    bottomTextBarACB("Welcome To Trivia. Are you ready? Once you go in there's no coming back..");
-
+    bottomTextBarACB("PixelBuddies also need to eat! Help (name) catch as many apples as possible.");
     return (
         <div>
             <div>
                 <button
                     className="cool-btn"
-                    onClick={() => props.triviaStarter()}
+                    onClick={() => props.applesStarter()}
                 >
-                    Start Trivia!
+                    Start Apple Catcher!
                 </button>
             </div>
         </div>
-    );
+    )
 }

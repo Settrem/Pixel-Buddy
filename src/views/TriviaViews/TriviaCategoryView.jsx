@@ -13,7 +13,7 @@ export function TriviaCategoryView(props) {
                     {props.categories.map((category) => (
                         <button
                             key={category.id}
-                            className="trivia-btn"
+                            className="cool-btn"
                             onClick={() => props.chooseCategory(category.id)}
                         >
                             {category.name}

@@ -54,7 +54,7 @@ export function TriviaQuestionView({ setBottomText, question, onAnswer, onNextQu
                     {shuffledAnswers.map((answer, index) => (
                         <button
                             key={index}
-                            className="trivia-btn"
+                            className="cool-btn"
                             style={{ color: getButtonColor(answer) }}
                             onClick={() => handleAnswerClick(answer)}
                             disabled={selectedAnswer !== null}
@@ -77,7 +77,7 @@ export function TriviaQuestionView({ setBottomText, question, onAnswer, onNextQu
             {selectedAnswer && (
                 <div>
                     <button
-                        className="trivia-btn trivia-next"
+                        className="cool-btn trivia-next"
                         onClick={onNextQuestion}
                     >
                         {currentIndex + 1 === totalQuestions ? "See Results" : "Next Question →"}

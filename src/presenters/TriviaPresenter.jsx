@@ -12,7 +12,7 @@ import { chosenCategory, getCategories } from "../triviaSource";
 const Trivia = observer(
     function Trivia(props) {
         // Base State
-        const [uiState, setUiState] = useState("TriviaStart");
+        const [uiState, setUiState] = useState("TriviaStartView");
 
         // Data States
         const [categories, setCategories] = useState([]);
