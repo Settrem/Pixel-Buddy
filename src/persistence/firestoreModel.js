@@ -111,6 +111,7 @@ function connectToPersistence(model, watchFunction){
             model.buddyModel.stats.hunger,
             model.buddyModel.stats.happiness,
             model.buddyModel.stats.energy,
+            model.buddyModel.buddyType,
             model.buddyModel.clothesHat,
             model.buddyModel.clothesTop,
             model.buddyModel.clothesBottom,

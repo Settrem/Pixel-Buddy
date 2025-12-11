@@ -7,11 +7,11 @@ import '../../styles/App.css';
 
 export function TriviaResultView( {score, total }) {
 
-        function bottomTextBarACB(message) {
-        props.setBottomText(message);
-    }
+        //function bottomTextBarACB(message) {
+        //props.setBottomText(message);
+    //}
 
-    bottomTextBarACB("Nice Work! (buddy) earned (amount) happiness!");
+    //bottomTextBarACB("Nice Work! (buddy) earned (amount) happiness!");
 
     return (
         <div className="trivia-grid trivia-text">
@@ -22,7 +22,7 @@ export function TriviaResultView( {score, total }) {
             <div>
                 <button
                     className="trivia-btn"
-                    onClick={() => props.buddy()}
+                    onClick={() => props.triviaStart()}
                 >
                     Back To Buddy!
                 </button>
