@@ -13,7 +13,8 @@ import { useEffect } from 'react';
 import { AuthenticationPage } from './presenters/AuthenticationPage'; // create this component
 import { observer } from 'mobx-react-lite';
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from './persistence/firestoreModel'; 
+import { auth } from './persistence/firestoreModel';
+import { Settings } from './presenters/SettingsPresenter';
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
@@ -24,7 +25,7 @@ const sidebarButtons = [
     { path: "clothes", type: "CLOTHES", },
 ];
 
-function makeRouter() {
+function makeRouter(props) {
   return createHashRouter([
     {
       path: "/",
@@ -36,7 +37,7 @@ function makeRouter() {
     },
     {
       path: "/settings",
-      element: <PixelTextBox>settings</PixelTextBox>,
+      element: <Settings userModel = {props.userModel}/>,
     },
     {
       path: "/apples",
@@ -89,13 +90,13 @@ const App = observer(
     // Logged in and model ready → show main app
     return (
       <div className="h-screen flex flex-col w-[100%]">
-        <div className="flex-1 flex flex-col sm:flex-row">
+        <div className="flex-1 sm:max-h-[650px] flex flex-col sm:flex-row">
           <div 
             className='flex-1 h-full border-[10px] order-0 border-black 
               sm:order-2 sm:border-l-[10px] 
               bg-[url("https://i.imgflip.com/6gp1di.jpg")]
               bg-cover bg-center'        >
-            <RouterProvider router={makeRouter()}/>
+            <RouterProvider router={makeRouter(props)}/>
           </div>
           <Sidebar className="order-2 sm:order-1"
             sidebarButtons = {sidebarButtons}

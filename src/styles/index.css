@@ -6,6 +6,10 @@
   src: url(../assets/BoldPixels.otf); /* url of the font */
 }
 
+:root {
+  --theme--color: rgb(255, 0, 158);
+}
+
 *{
   font-family: pixel;
 }

@@ -3,17 +3,19 @@ import { BORDERTHICKNESS } from "../../constants";
 
 const DOUBLE = BORDERTHICKNESS * 2;
 
-function PixelButton(props){
+function PixelColorButton(props){
+    const colorArray = props.color; // [84,92,158]
     const [isPressed, setIsPressed] = useState(false);
-    const bgColor = isPressed ? "#cccccc" : "white";
+    const bgColor = isPressed ? `rgb(128,128,128)`
+  : `rgb(${colorArray[0]},${colorArray[1]},${colorArray[2]})`;
 
     function clickButtonACB(){
-        props.btnClickCB(props);
+        props.changeColorCB(props.color);
     }
 
     return (
         <div 
-            className="w-full inline-flex flex-col items-center cursor-pointer"
+            className="w-full h-full inline-flex flex-col items-center cursor-pointer"
             onMouseDown={() => setIsPressed(true)}
             onMouseUp={() => setIsPressed(false)}
             onMouseLeave={() => setIsPressed(false)}
@@ -21,25 +23,25 @@ function PixelButton(props){
         >
             <div
                 style={{
-                backgroundColor: bgColor,
-                width: `calc(100% - ${DOUBLE}px)`,
-                height: `${DOUBLE}px`,
-                borderStyle: "solid",
-                borderColor: "black",
-                borderWidth: `${BORDERTHICKNESS}px`,
-                borderBottomWidth: 0, // remove bottom
-                marginBottom: `-${BORDERTHICKNESS}px`,
-                zIndex: 20,
+                    backgroundColor: bgColor,
+                    width: `calc(100% - ${DOUBLE}px)`,
+                    height: `${DOUBLE}px`,
+                    borderStyle: "solid",
+                    borderColor: "black",
+                    borderWidth: `${BORDERTHICKNESS}px`,
+                    borderBottomWidth: 0, // remove bottom
+                    marginBottom: `-${BORDERTHICKNESS}px`,
+                    zIndex: 40,
                 }}
             />
             <div 
-                className="w-full text-black select-none p-[5px] px-[10px]" 
+                className="w-full h-full text-black text-4xl select-none p-[5px] px-[10px]" 
                 style={{
                     backgroundColor: bgColor,
                     borderStyle: "solid",
                     borderColor: "black",
                     borderWidth: `${BORDERTHICKNESS}px`,
-                    zIndex: 10,
+                    zIndex: 30,
                 }}
             >
                 {props.children}
@@ -54,12 +56,12 @@ function PixelButton(props){
                 borderWidth: `${BORDERTHICKNESS}px`,
                 borderTopWidth: 0, // remove top
                 marginTop: `-${BORDERTHICKNESS}px`,
-                zIndex: 20,
+                zIndex: 40,
                 }}
             />
         </div>
     );
 }
 
-export { PixelButton }
+export { PixelColorButton }
 
