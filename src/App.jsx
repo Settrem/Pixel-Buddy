@@ -18,6 +18,7 @@ import { Buddy } from './presenters/BuddyPresenter.jsx';
 import { Clothes } from './presenters/ClothesPresenter.jsx';
 import { userModel } from './model/UserModel.js';
 import { Settings } from './presenters/SettingsPresenter';
+import { JokeAsBuddyWrapper } from './presenters/JokePresenter.jsx';
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
@@ -54,12 +55,16 @@ function makeRouter(props) {
     },
     {
       path: "/joke",
-      element: <PixelTextBox>joke</PixelTextBox>,
+      element: <JokeAsBuddyWrapper
+          key={props.interfaceModel.jokeReloadToken} 
+          userModel = {props.userModel}
+          interfaceModel={props.interfaceModel}
+        />,
     },
     {
       path: "/clothes",
       element: <Clothes
-      model = {props.userModel}
+        model = {props.userModel}
       />,
     }
   ]);
@@ -106,6 +111,7 @@ const App = observer(
             <RouterProvider router={makeRouter(props)}/>
           </div>
           <Sidebar className="order-2 sm:order-1"
+            interfaceModel = {props.interfaceModel}
             sidebarButtons = {sidebarButtons}
             name = {props.userModel.buddyModel.name}
           ></Sidebar>

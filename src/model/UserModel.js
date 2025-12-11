@@ -1,5 +1,5 @@
 import { customs } from "./buddyCustomizations";
-import { isRGBArray } from "../lib/utils";
+import { isRGBArray } from "../utils/utils";
 
 const ENERGY_LOSS_PER_HOUR = 2;
 

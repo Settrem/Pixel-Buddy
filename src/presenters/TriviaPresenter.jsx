@@ -4,7 +4,7 @@ import { TriviaCategoryView } from "../views/TriviaViews/TriviaCategoryView";
 import { TriviaQuestionView } from "../views/TriviaViews/TriviaQuestionView";
 import { TriviaResultView } from "../views/TriviaViews/TriviaResultView";
 import { TriviaStartView } from "../views/TriviaViews/TriviaStartView";
-import { chosenCategory, getCategories } from "../triviaSource";
+import { chosenCategory, getCategories } from "../utils/api_utils/triviaSource";
 /** TODO
  * CLEAN UP AND REFORM
  */

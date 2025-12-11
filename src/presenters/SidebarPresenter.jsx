@@ -8,6 +8,9 @@ const Sidebar = observer(
         const currentBtn = window.location.hash === "#" + "/" + props.path;
 
         function clickSidebarButtonACB(btn){
+            if (btn.path === "joke") {
+                props.interfaceModel.jokeReloadToken++;
+            }
             window.location.hash = "/" + btn.path;
         }
 
