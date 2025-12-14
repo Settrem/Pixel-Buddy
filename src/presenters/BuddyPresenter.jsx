@@ -5,7 +5,6 @@ const Buddy = observer(
     function buddyPresenter(props) {
         return <BuddyView
         buddy = {props.model.buddyModel}
-        hunger = {props.model.buddyModel.stats.hunger}
         />
     }
 )

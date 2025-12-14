@@ -14,11 +14,11 @@ export function ClothesView(props) {
             }
 
             return (
-                <div className="flex p-2 m-1" style={{backgroundColor:"#523052",}}>
+                <div className="bg-[rgba(0,0,0,0.3)] flex p-2 m-1">
                     <div className="p-[2px]" onClick={pickFormerACB}>
                         <img className="h-[33px] rotate-180" src="./src/assets/gfxfolder/arrow.png"/>
                     </div>
-                    <div className="w-[300px] h-[37px]" style={{backgroundColor:"#220022"}}>{customs[type.iiii][props.buddy[type.iiii]]}</div>
+                    <div className="bg-[rgba(0,0,0,0.5)] w-[300px] h-[37px]">{customs[type.iiii][props.buddy[type.iiii]]}</div>
                     <div className="p-[2px]" onClick={pickNextACB}>
                         <img className="h-[33px]" src="./src/assets/gfxfolder/arrow.png"/>
                     </div>
@@ -27,15 +27,15 @@ export function ClothesView(props) {
     );
     
     return (
-        <div className="w-full h-full relative p-5" style={{backgroundColor:"#724072"}}>
-            <div style={{fontSize: "30px", color:"#ffffff",  imageRendering:"pixelated", justifyItems:"center"}}>
+        <div className="bg-[var(--theme-color)] w-full h-full relative p-5 flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center" style={{fontSize: "30px", color:"#ffffff",  imageRendering:"pixelated", justifyItems:"center"}}>
                 <Changer iiii = "buddyType"/>
                 <Changer iiii = "clothesHat"/>
                 <Changer iiii = "clothesTop"/>
                 <Changer iiii = "clothesBottom"/>
                 <Changer iiii = "clothesShoes"/>
                 <b className="h-5px"/>
-                <div className="w-[180px] h-[180px] relative" style={{backgroundColor:"#422042"}}>
+                <div className="bg-[rgba(0,0,0,0.3)] w-[180px] h-[180px] relative">
                     <BuddyComponent
                     buddy = {props.buddy}
                     />

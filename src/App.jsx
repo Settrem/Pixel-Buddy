@@ -20,6 +20,7 @@ import { Clothes } from './presenters/ClothesPresenter.jsx';
 import { userModel } from './model/UserModel.js';
 import { Settings } from './presenters/SettingsPresenter';
 import { JokeAsBuddyWrapper } from './presenters/JokePresenter.jsx';
+import { Background } from './presenters/BackgroundPresenter.jsx';
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
@@ -34,7 +35,10 @@ function makeRouter(props) {
   return createHashRouter([
     {
       path: "/",
-      element: <PixelTextBox>buddy</PixelTextBox>,   // default screen
+      element: <BuddyWeather
+        model = {props.userModel}
+        interfaceModel={props.interfaceModel}
+      />,
     },
     {
       path: "/buddy",
@@ -106,11 +110,15 @@ const App = observer(
       <div className="h-screen flex flex-col w-[100%]">
         <div className="flex-1 sm:max-h-[650px] flex flex-col sm:flex-row">
           <div 
-            className='flex-1 h-full border-[10px] order-0 border-black 
-              sm:order-2 sm:border-l-[10px] 
-              bg-[url("https://i.imgflip.com/6gp1di.jpg")]
-              bg-cover bg-center'        >
-            <RouterProvider router={makeRouter(props)}/>
+            className='flex-1 h-full border-[10px] 
+              order-0 sm:order-2
+            border-black  sm:border-l-[10px] 
+              relative overflow-hidden
+            '>
+            <Background interfaceModel = {props.interfaceModel} />
+            <div className="relative z-10 w-full h-full"> 
+              <RouterProvider router={makeRouter(props)}/>
+            </div>
           </div>
           <Sidebar className="order-2 sm:order-1"
             interfaceModel = {props.interfaceModel}
