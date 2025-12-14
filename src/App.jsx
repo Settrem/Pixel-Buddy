@@ -21,6 +21,7 @@ import { userModel } from './model/UserModel.js';
 import { Settings } from './presenters/SettingsPresenter';
 import { JokeAsBuddyWrapper } from './presenters/JokePresenter.jsx';
 import { Background } from './presenters/BackgroundPresenter.jsx';
+import { StatusBarPresenter } from './presenters/StatusBarPresenter.jsx';
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
@@ -115,6 +116,7 @@ const App = observer(
             border-black  sm:border-l-[10px] 
               relative overflow-hidden
             '>
+            <StatusBarPresenter userModel = {props.userModel}/>  
             <Background interfaceModel = {props.interfaceModel} />
             <div className="relative z-10 w-full h-full"> 
               <RouterProvider router={makeRouter(props)}/>
