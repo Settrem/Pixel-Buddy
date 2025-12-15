@@ -1,67 +1,45 @@
-import '../../styles/App.css';
+import { useEffect, useRef } from "react";
+import { launchGame } from "../../appleGame";
 
 export function ApplesGameView(props) {
+    const gameContainerRef = useRef(null);
+    const gameInstance = useRef(null);
 
-    function gameLoop() {
-        // While true loop
-        playerMovement(e);
-        appleSpawn();
-    }
-    function clearSprites() {
-        props.clearSprites();
-    }
-    // render sprites
-    function renderSprites() {
-        props.renderSprites();
-    }
-    // start 3 second countdown
-    function countDown() {
-        props.countDown();
-    }
-    // Enable movement for the player
-    function playerMovement(e) {
-        props.playerMovement(e);
-    }
-    // spawn apples
-    function appleSpawn() {
-        props.appleSpawn();
-    }
+    useEffect(() => {
+        if (gameContainerRef.current && !gameInstance.current) {
+            
+            const callbacks = {
+                onScoreChangeCB: (newScore) => {
+                    props.onScoreUpdateCB(newScore);
+                },
+                onGameOverCB: (finalScore, maxApples) => {
+                    props.onGameOverCB(finalScore, maxApples);
+                }
+            };
+
+            gameInstance.current = launchGame("phaser-game-container", callbacks);
+        }
+
+        return () => {
+            if (gameInstance.current) {
+                gameInstance.current.destroy(true);
+                gameInstance.current = null;
+            }
+        };
+    }, []);
 
     return (
-    clearSprites(),
-    renderSprites(),
-    countDown(),
-    gameLoop()
-    )
+        <div
+            id="phaser-game-container"
+            ref={gameContainerRef}
+            style={{
+                width: '100%',
+                flex: 1,
+                display: 'block',
+                overflow: 'hidden',
+                position: 'relative',
+                imageRendering: "pixelated"
+            }}
+        />
+    );
 }
-
-
-/**
- * BASKET
- * WIDTH
- * HEIGHT
- * FOLLOWS MOUSE
- * 
- * SPAWN POSITION
- * MIDDLE OF SCREEN
- * 
- * APPLE
- * WIDTH
- * HEIGHT
- * FALLS IN RANDOM POSITON
- * GRAVITY >> DOWNARD TRAJECTORY
- * 
- * SCORE
- * X AMOUNT OF APPLES FALL
- * AMOUNT CAUGHT IS AMOUNT OF POINTS RECIEVED
- * AMOUNT POINTS TRANSLATE TO HUNGER FILLED
- * 
- * BOUNDARIES
- * BASKET CAN ONLY BE MOVED IN X-POSITION
- * APPLES FALL FROM ENTIRE SCREEN - SOME LEEWAY FROM UPPER BOUNDARY
- * 
- * GAMEOVERVIEW
- * TOTAL AMOUNT OF SCORE DISPLAYED
- * BACK TO BUDDY BUTTON
- * 
- */

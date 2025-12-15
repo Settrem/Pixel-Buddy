@@ -1,16 +1,19 @@
-export const basketModel = {
-    Basket: {
-        width: 50,
-        height: 10,
-        x: app.view.width / 2,
-        y: app.view.height / 2,
-        dx: 0,
-        movementSpeed: 100,
+export class Basket {
+    constructor(imagePath, x, y) {
+        this.width = 50;
+        this.height = 50;
+        this.imagePath = imagePath;
 
-        movement(e) {
-            let pos = e.data.global;
-            basket.x = pos.x;
-        }
+        this.x = x || 0;
+        this.y = y || 0;
+
+        this.dx = 0;
+        this.movementSpeed = 100;
+    }
+    movement(e) {
+        let pos = e.data.global;
+        this.x = pos.x;
     }
 }
 
+export const basketModel = { Basket };

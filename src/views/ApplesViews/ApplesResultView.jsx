@@ -1,17 +1,13 @@
-//TODO
-/**
- * Pass through the BottomTextBar to make recieving points reactive based on score
- */
-
 import '../../styles/App.css';
+import { useEffect } from 'react';
 
-export function ApplesResultView( {score, total }) {
+export function ApplesResultView({ score, total, setBottomText, onRestartACB }) {
 
-        //function bottomTextBarACB(message) {
-        //props.setBottomText(message);
-    //}
-
-    //bottomTextBarACB("Nice Work! (buddy) earned (amount) happiness!");
+    useEffect(() => {
+        if (setBottomText) {
+            setBottomText(`Nice Work! You caught ${score} out of ${total} apples!`);
+        }
+    }, [score, total, setBottomText]);
 
     return (
         <div className="trivia-grid trivia-text">
@@ -22,12 +18,11 @@ export function ApplesResultView( {score, total }) {
             <div>
                 <button
                     className="cool-btn"
-                    onClick={() => props.ApplesStartView()}
+                    onClick={onRestartACB}
                 >
-                    Back To Buddy!
+                    Try Again?
                 </button>
             </div>
         </div>
     );
 }
-

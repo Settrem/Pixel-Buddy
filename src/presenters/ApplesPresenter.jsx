@@ -1,68 +1,73 @@
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ApplesStartView } from "../views/ApplesViews/ApplesStartView";
 import { ApplesGameView } from "../views/ApplesViews/ApplesGameView";
 import { ApplesResultView } from "../views/ApplesViews/ApplesResultView";
 
-const Apples = observer(
-    function Apples(props) {
+const Apples = observer(function Apples(props) {
+    const [uiState, setUiState] = useState("ApplesStartView");
+    const [score, setScore] = useState(0);
+    const [totalApples, setTotalApples] = useState(10);
 
-        const [uiState, setUiState] = useState("ApplesStartView");
-        const [score, setScore] = useState(0);
-
-        function writeToBottomText(message) {
+    function writeToBottomText(message) {
+        if (props.interfaceModel) {
             props.interfaceModel.setBoxTextTo(message);
         }
+    }
 
-        function applesStarterACB() {
-            setUiState("applesStart");
-        }
+    function startGameACB() {
+        setScore(0);
+        setUiState("applesStart");
+        writeToBottomText("Current Score: 0");
+    }
 
-        // Renders and Removes Sprites From Screen
-        function clearAllSprites() {
-            
-        }
+    function handleScoreUpdateCB(newScore) {
+        setScore(newScore);
+        writeToBottomText(`Current Score: ${newScore}`);
+    }
 
-        function renderAllSprites() {
-            props.basketModel.Basket();
-            props.appleModel.Apples();
-        }
+    function handleGameOverCB(finalScore, maxApples) {
+        setUiState("gameOver");
+        setTotalApples(maxApples);
+        writeToBottomText(`Game Over! Final Score: ${finalScore} / ${maxApples}`);
+    }
 
-        function startCountDown() {
-        
-        }
-
-        function spawnApples() {
-            
-        }
-        
-
-        if (uiState === "gameOver") {
-            return (
-                <ApplesResultView
-                    setBottomText={writeToBottomText}
-                />
-            )
-        }
-
-        if (uiState === "applesStart") {
-            return (
-                <ApplesGameView
-                    clearSprites={clearAllSprites}
-                    renderSprites={renderAllSprites}
-                    countDown={startCountDown}
-                    appleSpawn={spawnApples}
-                    setBottomText={writeToBottomText}
-                />
-            );
-        }
-
+    if (uiState === "gameOver") {
         return (
-            <ApplesStartView
+            <ApplesResultView
+                score={score}
+                total={totalApples}
                 setBottomText={writeToBottomText}
-                applesStarter={applesStarterACB}
+                onRestartACB={startGameACB}
             />
         );
-    })
+    }
+
+    if (uiState === "applesStart") {
+        return (
+            <div style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                overflow: "hidden"
+            }}>
+                <div style={{ flex: 1, width: "100%", position: "relative" }}>
+                    <ApplesGameView
+                        onScoreUpdateCB={handleScoreUpdateCB}
+                        onGameOverCB={handleGameOverCB}
+                    />
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <ApplesStartView
+            setBottomText={writeToBottomText}
+            applesStarterACB={startGameACB}
+        />
+    );
+});
 
 export { Apples };

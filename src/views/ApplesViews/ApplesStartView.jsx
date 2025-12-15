@@ -1,22 +1,24 @@
 import '../../styles/App.css';
+import { useEffect } from 'react';
 
-export function ApplesStartView(props) {
+export function ApplesStartView({ applesStarterACB, setBottomText }) {
 
-    function bottomTextBarACB(message) {
-        props.setBottomText(message);
-    }
+    useEffect(() => {
+        if (setBottomText) {
+            setBottomText("PixelBuddies also need to eat! Help (name) catch as many apples as possible.");
+        }
+    }, [setBottomText]);
 
-    bottomTextBarACB("PixelBuddies also need to eat! Help (name) catch as many apples as possible.");
     return (
         <div>
             <div>
                 <button
                     className="cool-btn"
-                    onClick={() => props.applesStarter()}
+                    onClick={applesStarterACB}
                 >
                     Start Apple Catcher!
                 </button>
             </div>
         </div>
-    )
+    );
 }
