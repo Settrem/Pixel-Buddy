@@ -13,7 +13,7 @@ export const interfaceModel = {
             let parts = [];
 
             if (this.localTime) {
-                parts.push(`🕒 It's ${this.localTime}`);
+                //parts.push(`🕒 It's ${this.localTime}`);
             }
 
             if (this.temp) {

@@ -9,15 +9,14 @@ const PixelStatusBar = observer(
 function PixelStatusBar(props){
     return (
         <div 
-            className="w-full h-[30px] flex flex-row items-center cursor-pointer gap-[5px]"
+            className="w-full h-[15px] sm:h-[30px] flex flex-row items-center cursor-pointer gap-[5px]"
         >
-            <img className="h-full w-10" src={props.statusImage} alt="" />
+            <img className="h-4 w-6 sm:h-7 sm:w-10" src={props.statusImage} alt="" />
             <div 
-                className="w-full h-full select-none flex flex-row items-baseline" 
+                className="w-full h-full border-2 sm:border-6 select-none flex flex-row items-baseline" 
                 style={{
                     borderStyle: "solid",
                     borderColor: "black",
-                    borderWidth: `${BORDERTHICKNESS}px`,
                 }}
             >
                 <div className="h-full"

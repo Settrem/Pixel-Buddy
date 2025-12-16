@@ -111,7 +111,7 @@ const App = observer(
       <div className="h-screen flex flex-col w-[100%]">
         <div className="flex-1 sm:max-h-[650px] flex flex-col sm:flex-row">
           <div 
-            className='flex-1 h-full border-[10px] 
+            className='flex-1 h-full min-h-[400px] border-[10px] 
               order-0 sm:order-2
             border-black  sm:border-l-[10px] 
               relative overflow-hidden
