@@ -106,6 +106,9 @@ const App = observer(
     // Wait until model is ready
     if (!props.userModel.ready) return <div className="text-white">Loading user data...</div>;
 
+    const currentHash = window.location.hash; 
+    const showStatusBar = currentHash === "#/" || currentHash === "#/buddy";
+
     // Logged in and model ready → show main app
     return (
       <div className="h-screen flex flex-col w-[100%]">
@@ -115,8 +118,7 @@ const App = observer(
               order-0 sm:order-2
             border-black  sm:border-l-[10px] 
               relative overflow-hidden
-            '>
-            <StatusBarPresenter userModel = {props.userModel}/>  
+            '>  
             <Background interfaceModel = {props.interfaceModel} />
             <div className="relative z-10 w-full h-full"> 
               <RouterProvider router={makeRouter(props)}/>

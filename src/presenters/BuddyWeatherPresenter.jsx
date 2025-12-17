@@ -4,6 +4,7 @@ import { Buddy } from "./BuddyPresenter";
 import { useEffect } from "react";
 import { useDynamicWeather } from "../utils/api_utils/weatherSource";
 import { Background } from "./BackgroundPresenter";
+import { StatusBarPresenter } from "./StatusBarPresenter"; 
 
 function BuddyWeather(props) {
   const { data, loading, error } = useDynamicWeather();
@@ -36,7 +37,10 @@ function BuddyWeather(props) {
   }, [loading, error, data]);
 
   return (
-    <Buddy model={props.model} />
+    <div className="h-full w-full">
+      <StatusBarPresenter userModel = {props.model}/>
+      <Buddy model={props.model} />
+    </div>
   );
 }
 
