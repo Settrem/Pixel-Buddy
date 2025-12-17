@@ -129,7 +129,9 @@ function connectToPersistence(model, watchFunction){
             };
             model.uiTheme = data.uiTheme || [84, 92, 158];
 
+            
             model.ready = true;
+            model.buddyModel.statChangeOverTime();
 
             } catch (error) {
             console.error("Error loading Firestore model:", error);
@@ -149,7 +151,8 @@ function connectToPersistence(model, watchFunction){
             model.buddyModel.clothesTop,
             model.buddyModel.clothesBottom,
             model.buddyModel.clothesShoes,
-            model.uiTheme
+            model.uiTheme,
+            model.buddyModel.lastTimeInteracted,
         ];
     }
 

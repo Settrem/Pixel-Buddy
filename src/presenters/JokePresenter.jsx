@@ -11,6 +11,7 @@ function JokeAsBuddyWrapper(props) {
     
     useEffect(() => {
         writeToBottomText(generateJoke());
+        props.userModel.buddyModel.energyLossAfterActivity(3);
     }, []);
 
     return <Buddy model = {props.userModel}/>;
