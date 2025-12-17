@@ -5,11 +5,28 @@ import { logIn } from "../persistence/firestoreModel";
 function LogInPresenter(props){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState(null);
 
+    async function sendLogInFormACB() {
+        try {
+            await logIn(email, password);
+            // success → navigate / continue
+        } catch (error) {
+            console.error("Login error:", error);
 
-    function sendLogInFormACB(){
-        console.log(email+ " " + password);
-        logIn(email, password);
+            // Map Firebase errors → human text
+            if (!email || !password) {
+                setErrorMessage("Email and password are required.");
+                return;
+            }
+            if (error.code === "auth/invalid-email") {
+                setErrorMessage("Please enter a valid email address.");
+            } else if (error.code === "auth/wrong-password") {
+                setErrorMessage("Incorrect password.");
+            } else {
+                setErrorMessage("Login failed. Please try again.");
+            }
+        }
     }
 
     return (
@@ -21,6 +38,8 @@ function LogInPresenter(props){
             setPassword = {setPassword}
             sendLogInFormCB = {sendLogInFormACB}
             switchToSignUpACB = {props.switchToSignUpCB}
+            errorMessage={errorMessage}
+            clearError={() => setErrorMessage(null)}
         />
     </div>
     );
