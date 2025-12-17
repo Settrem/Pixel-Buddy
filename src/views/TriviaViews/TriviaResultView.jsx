@@ -1,30 +1,36 @@
-//TODO
-/**
- * Pass through the BottomTextBar to make recieving points reactive based on score
- */
-
 import '../../styles/App.css';
+import { useEffect } from 'react';
 
-export function TriviaResultView( {score, total }) {
+export function TriviaResultView({ score, total, setBottomText, onRestartACB, onBackToBuddyABC }) {
 
-        //function bottomTextBarACB(message) {
-        //props.setBottomText(message);
-    //}
+    useEffect(() => {
+        if (setBottomText) {
+            setBottomText(`Nice Work! You got ${score} out of ${total} questions!`);
+        }
+    }, [score, total, setBottomText]);
 
-    //bottomTextBarACB("Nice Work! (buddy) earned (amount) happiness!");
-
-    return (
+   return (
         <div className="trivia-grid trivia-text">
-            <h1>Game Over!</h1>
-            <p>
-                You scored {score} out of {total}
-            </p>
-            <div>
+            <h1 style={{
+                borderColor: "black",
+                fontSize: "2em"
+            }}
+            >Game Over!</h1>
+            <div style={{
+                display: "flex",
+                flexDirection: "column",
+            }}>
                 <button
                     className="cool-btn"
-                    onClick={() => props.triviaStart()}
+                    onClick={onBackToBuddyABC}
                 >
-                    Back To Buddy!
+                    Back To Buddy
+                </button>
+                <button
+                    className="cool-btn"
+                    onClick={onRestartACB}
+                >
+                    Try Again?
                 </button>
             </div>
         </div>

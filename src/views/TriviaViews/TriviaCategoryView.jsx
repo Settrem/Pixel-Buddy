@@ -1,24 +1,17 @@
 import '../../styles/App.css';
 
-export function TriviaCategoryView(props) {
-
-    function bottomTextBarACB(message) {
-        props.setBottomText(message);
-    }
-
-    bottomTextBarACB("Please choose a category!");
-    
+export function TriviaCategoryView({ categories, onChooseCategoryACB }) {
     return (
-            <div className="trivia-grid">
-                    {props.categories.map((category) => (
-                        <button
-                            key={category.id}
-                            className="cool-btn"
-                            onClick={() => props.chooseCategory(category.id)}
-                        >
-                            {category.name}
-                        </button>
-                    ))}
-            </div>
+        <div className="trivia-grid">
+            {categories.map((category) => (
+                <button
+                    key={category.id}
+                    className="cool-btn"
+                    onClick={() => onChooseCategoryACB(category.id)}
+                >
+                    {category.name}
+                </button>
+            ))}
+        </div>
     );
 }

@@ -40,8 +40,8 @@ class GameScene extends Phaser.Scene {
     this.player.setSize(100 / 4, 20 / 4).setOffset(0, 10); 
 
     // Target
-    this.target = this.physics.add.image(this.getRandomX(), 0, "apple").setOrigin(0, 0);
-    this.target.setScale(4);
+    this.target = this.physics.add.image(this.getRandomX(), -100, "apple").setOrigin(0, 0);
+    this.target.setScale(3);
     this.target.setMaxVelocity(10, speedDown);
     this.target.setBounce(0);
     this.target.setGravityY(speedDown);
@@ -54,7 +54,7 @@ class GameScene extends Phaser.Scene {
     const { width, height } = this.scale;
 
     // Check for Miss
-    if (this.target.y >= height + 50) {
+    if (this.target.y >= height + 100) {
       this.handleAppleOutcome(false);
     }
 
@@ -85,7 +85,7 @@ class GameScene extends Phaser.Scene {
       this.target.destroy();
       this.gameOver();
     } else {
-      this.target.setY(0);
+      this.target.setY(-100);
       this.target.setX(this.getRandomX());
       this.target.setVelocity(0, 0);
     }
@@ -96,7 +96,7 @@ class GameScene extends Phaser.Scene {
   }
 
   getRandomX() {
-    return Math.floor(Math.random() * (this.scale.width - 50));
+    return Math.floor(Math.random() * (this.scale.width - 75));
   }
 
   resize(gameSize) {

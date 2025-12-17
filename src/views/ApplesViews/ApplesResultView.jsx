@@ -1,7 +1,7 @@
 import '../../styles/App.css';
 import { useEffect } from 'react';
 
-export function ApplesResultView({ score, total, setBottomText, onRestartACB }) {
+export function ApplesResultView({ score, total, setBottomText, onRestartACB, onBackToBuddyABC }) {
 
     useEffect(() => {
         if (setBottomText) {
@@ -11,11 +11,21 @@ export function ApplesResultView({ score, total, setBottomText, onRestartACB }) 
 
     return (
         <div className="trivia-grid trivia-text">
-            <h1>Game Over!</h1>
-            <p>
-                You scored {score} out of {total}
-            </p>
-            <div>
+            <h1 style={{
+                borderColor: "black",
+                fontSize: "2em"
+            }}
+            >Game Over!</h1>
+            <div style={{
+                display: "flex",
+                flexDirection: "column",
+            }}>
+                <button
+                    className="cool-btn"
+                    onClick={onBackToBuddyABC}
+                >
+                    Back To Buddy
+                </button>
                 <button
                     className="cool-btn"
                     onClick={onRestartACB}

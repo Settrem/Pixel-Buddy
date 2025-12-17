@@ -1,18 +1,24 @@
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
+
+// Views
 import { ApplesStartView } from "../views/ApplesViews/ApplesStartView";
 import { ApplesGameView } from "../views/ApplesViews/ApplesGameView";
 import { ApplesResultView } from "../views/ApplesViews/ApplesResultView";
+import { BuddyView } from "../views/BuddyView";
 
 const Apples = observer(function Apples(props) {
+    // Base State
     const [uiState, setUiState] = useState("ApplesStartView");
+
+    // Data States
     const [score, setScore] = useState(0);
     const [totalApples, setTotalApples] = useState(10);
 
     function writeToBottomText(message) {
         if (props.interfaceModel) {
             props.interfaceModel.setBoxTextTo(message);
-        }
+    }
     }
 
     function startGameACB() {
@@ -32,6 +38,10 @@ const Apples = observer(function Apples(props) {
         writeToBottomText(`Game Over! Final Score: ${finalScore} / ${maxApples}`);
     }
 
+    function backToBuddyABC() {
+        // Change Window something something
+    }
+
     if (uiState === "gameOver") {
         return (
             <ApplesResultView
@@ -39,6 +49,7 @@ const Apples = observer(function Apples(props) {
                 total={totalApples}
                 setBottomText={writeToBottomText}
                 onRestartACB={startGameACB}
+                onBackToBuddyABC={backToBuddyABC}
             />
         );
     }

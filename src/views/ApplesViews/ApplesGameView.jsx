@@ -32,14 +32,6 @@ export function ApplesGameView(props) {
         <div
             id="phaser-game-container"
             ref={gameContainerRef}
-            style={{
-                width: '100%',
-                flex: 1,
-                display: 'block',
-                overflow: 'hidden',
-                position: 'relative',
-                imageRendering: "pixelated"
-            }}
         />
     );
 }

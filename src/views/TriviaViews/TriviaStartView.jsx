@@ -1,19 +1,20 @@
 import '../../styles/App.css';
+import { useEffect } from 'react';
 
-export function TriviaStartView(props) {
+export function TriviaStartView({ onTriviaStarterACB, setBottomText }) {
 
-    function bottomTextBarACB(message) {
-        props.setBottomText(message);
-    }
-
-    bottomTextBarACB("Welcome To Trivia. Are you ready? Once you go in there's no coming back..");
+    useEffect(() => {
+        if (setBottomText) {
+            setBottomText("Welcome To Trivia. Are you ready? If you leave before the game ends, 'buddy' won't gain any happiness!");
+        }
+    }, [setBottomText]);
 
     return (
         <div>
             <div>
                 <button
                     className="cool-btn"
-                    onClick={() => props.triviaStarter()}
+                    onClick={onTriviaStarterACB}
                 >
                     Start Trivia!
                 </button>
