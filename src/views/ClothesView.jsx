@@ -18,7 +18,7 @@ export function ClothesView(props) {
                     <div className="p-[2px]" onClick={pickFormerACB}>
                         <img className="h-[33px] rotate-180" src="./src/assets/gfxfolder/arrow.png"/>
                     </div>
-                    <div className="bg-[rgba(0,0,0,0.5)] w-[300px] h-[37px]">{customs[type.iiii][props.buddy[type.iiii]]}</div>
+                    <div className="bg-[rgba(0,0,0,0.5)] w-[200px] sm:w-[300px] h-[37px]">{customs[type.iiii][props.buddy[type.iiii]]}</div>
                     <div className="p-[2px]" onClick={pickNextACB}>
                         <img className="h-[33px]" src="./src/assets/gfxfolder/arrow.png"/>
                     </div>
