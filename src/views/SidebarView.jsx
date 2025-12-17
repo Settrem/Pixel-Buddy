@@ -32,16 +32,22 @@ function SidebarView(props) {
             <div className="text-[40px] sm:text-[60px]  sm:-mt-3">{props.name}</div>
             
             <div className="">
-                <Carousel className="w-full flex flex:row items-center sm:flex-col gap-5 sm:gap-4" orientation="vertical" opts={{ align: "start", }}>
+                <Carousel className="w-full flex flex:row items-center sm:flex-col gap-5 sm:gap-1" style={{imageRendering:"pixelated"}} orientation="vertical" opts={{ align: "start", }}>
                     <div>
-                        <CarouselPrevious className="relative top-0">
+                        <CarouselPrevious 
+                            className="relative top-0 rotate-270"
+                            prevImg="./src/assets/gfxfolder/arrow.png"
+                            prevImgDisabled="./src/assets/gfxfolder/arrowPressed.png">
                         </CarouselPrevious>
                     </div>
                     <CarouselContent className="-mt-[5px] h-50 sm:h-[430px] sm:gap-[0px]">
                         {[...props.sidebarButtons]?.map(renderSidebarsCB)}
                     </CarouselContent>
                     <div>
-                        <CarouselNext className="relative top-0">
+                        <CarouselNext 
+                            className="relative top-0"
+                            nextImg="./src/assets/gfxfolder/arrow.png"
+                            nextImgDisabled="./src/assets/gfxfolder/arrowPressed.png">
                         </CarouselNext>
                     </div>
                 </Carousel>
@@ -50,5 +56,7 @@ function SidebarView(props) {
         </div>
     );
 }
+
+//<img className="h-[33px]" src="./src/assets/gfxfolder/arrow.png"/>
 
 export { SidebarView } 

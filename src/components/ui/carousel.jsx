@@ -143,53 +143,55 @@ function CarouselItem({
   );
 }
 
-function CarouselPrevious({
-  className,
-  variant = "outline",
-  size = "icon",
-  ...props
-}) {
-  const { orientation, scrollPrev, canScrollPrev } = useCarousel()
+function CarouselPrevious({ className, prevImg, prevImgDisabled, ...props }) {
+  const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
   return (
-    <Button
-      data-slot="carousel-previous"
-      variant={variant}
-      size={size}
-      className={cn("absolute size-8 rounded-full", orientation === "horizontal"
-        ? "top-1/2 -left-12 -translate-y-1/2"
-        : "-top-12 left-1/2 -translate-x-1/2 rotate-90", className)}
+    <button
+      className={cn(
+        "absolute w-10 h-10",
+        orientation === "horizontal"
+          ? "top-1/2 -left-12 -translate-y-1/2"
+          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+          canScrollPrev ? "cursor-pointer" : "cursor-auto",
+        className
+      )}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
-      {...props}>
-      <ArrowLeft />
-      <span className="sr-only">Previous slide</span>
-    </Button>
+      {...props}
+    >
+      <img
+        src={canScrollPrev ? prevImg : prevImgDisabled}
+        alt="Previous slide"
+        className="w-full h-full object-contain"
+      />
+    </button>
   );
 }
 
-function CarouselNext({
-  className,
-  variant = "outline",
-  size = "icon",
-  ...props
-}) {
-  const { orientation, scrollNext, canScrollNext } = useCarousel()
+function CarouselNext({ className, nextImg, nextImgDisabled, ...props }) {
+  const { orientation, scrollNext, canScrollNext } = useCarousel();
 
   return (
-    <Button
-      data-slot="carousel-next"
-      variant={variant}
-      size={size}
-      className={cn("absolute size-8 rounded-full", orientation === "horizontal"
-        ? "top-1/2 -right-12 -translate-y-1/2"
-        : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90", className)}
+    <button
+      className={cn(
+        "absolute w-10 h-10",
+        orientation === "horizontal"
+          ? "top-1/2 -right-12 -translate-y-1/2"
+          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+          canScrollNext ? "cursor-pointer" : "cursor-auto",
+        className
+      )}
       disabled={!canScrollNext}
       onClick={scrollNext}
-      {...props}>
-      <ArrowRight />
-      <span className="sr-only">Next slide</span>
-    </Button>
+      {...props}
+    >
+      <img
+        src={canScrollNext ? nextImg : nextImgDisabled}
+        alt="Next slide"
+        className="w-full h-full object-contain"
+      />
+    </button>
   );
 }
 
