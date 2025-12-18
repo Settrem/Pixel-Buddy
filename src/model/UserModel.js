@@ -2,7 +2,8 @@ import { customs } from "./buddyCustomizations";
 import { isRGBArray } from "../utils/utils";
 
 const ENERGY_GAIN_PER_HOUR = 10;
-const HUNGER_GAIN_PER_HOUR = 3;
+const HUNGER_GAIN_PER_HOUR = 2;
+const HAPPINESS_LOST_PER_HOUR = 3;
 
 export const userModel = {
     user: null, //When logged in will hold uid and userName objects
@@ -25,7 +26,7 @@ export const userModel = {
             const now = new Date();
             const last = this.lastTimeInteracted;
             this.addEnergyByTime(now, last)
-            this.looseHungerByTime(now, last)
+            this.looseHungerAndHappinessByTime(now, last)
             this.lastTimeInteracted = new Date();
         },
         
@@ -41,15 +42,20 @@ export const userModel = {
             }
         },
 
-        looseHungerByTime(currentTime, lastTime) {
+        looseHungerAndHappinessByTime(currentTime, lastTime) {
             console.log(lastTime);
             const diffMs = currentTime - lastTime;
             const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
             const hungerGained = diffHours * HUNGER_GAIN_PER_HOUR;
+            const happinessLost = diffHours * HAPPINESS_LOST_PER_HOUR;
             
             if(hungerGained>0) {
                 this.stats.hunger = Math.max(0, this.stats.hunger - hungerGained);
                 if(this.stats.hunger > 100) this.stats.hunger = 100; 
+            }
+            if(happinessLost>0) {
+                this.stats.happiness = Math.max(0, this.stats.happiness - happinessLost);
+                if(this.stats.happiness > 100) this.stats.happiness = 100; 
             }
         },
         

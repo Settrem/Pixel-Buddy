@@ -12,6 +12,7 @@ function JokeAsBuddyWrapper(props) {
     
     useEffect(() => {
         writeToBottomText(generateJoke());
+        props.userModel.buddyModel.addHappiness(5);
         props.userModel.buddyModel.energyLossAfterActivity(3);
     }, []);
 
