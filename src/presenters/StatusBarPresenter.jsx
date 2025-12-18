@@ -8,12 +8,12 @@ const StatusBarPresenter= observer(
         const statusform = [
             {
                 status: props.userModel.buddyModel.stats.hunger,
-                color: "red",
+                color: "orange",
                 image: "../../public/assets/hunger.png",
             },
             {
                 status: props.userModel.buddyModel.stats.happiness,
-                color: "blue",
+                color: "red",
                 image: "../../public/assets/happy.png",
             },
             {
