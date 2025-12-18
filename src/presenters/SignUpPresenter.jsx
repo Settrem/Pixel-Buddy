@@ -1,15 +1,17 @@
 import { SignUpView } from "../views/SignUpView";
 import { useState } from "react";
 import { signUp } from "../persistence/firestoreModel";
+import { SuspenseView } from "../views/SuspenseView";
 
 function SignUpPresenter(props){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [buddyName, setBuddyName] = useState("");
     const [errorMessage, setErrorMessage] = useState(null);
+    const [signUpPromise, setSignUpPromise] = useState(null);
+    const [signUpError, setSignUpError] = useState(null);
 
     async function sendSignUpFormACB() {
-        // 🔹 Basic client-side validation
         if (!email || !password || !buddyName) {
             setErrorMessage("All fields are required.");
             return;
@@ -20,10 +22,14 @@ function SignUpPresenter(props){
             return;
         }
 
-        try {
-            await signUp(email, password, buddyName);
-        } catch (error) {
+        const promise = signUp(email, password, buddyName);
+        setSignUpPromise(promise);
+        setSignUpError(null);
+
+        promise.catch(error => {
             console.error("Sign up failed:", error);
+            setSignUpError(error);
+
             switch (error.code) {
                 case "auth/invalid-email":
                     setErrorMessage("Please enter a valid email address.");
@@ -37,7 +43,13 @@ function SignUpPresenter(props){
                 default:
                     setErrorMessage("Sign up failed. Please try again.");
             }
-        }
+        });
+    }
+
+    if (signUpPromise && !signUpError) {
+        return (
+            <SuspenseView/>
+        );
     }
 
     return (
