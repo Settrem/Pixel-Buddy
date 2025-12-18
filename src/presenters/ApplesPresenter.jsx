@@ -39,7 +39,7 @@ const Apples = observer(function Apples(props) {
     }
 
     function backToBuddyABC() {
-        // Change Window something something
+        window.location.hash = "/buddy";
     }
 
     if (uiState === "gameOver") {

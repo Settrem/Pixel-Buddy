@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import basket from './assets/gfxfolder/basket.png';
 import apple from './assets/gfxfolder/apple.png';
+import bg from '../public/assets/sunBackground.png';
 
 const speedDown = 1000;
 
@@ -17,12 +18,18 @@ class GameScene extends Phaser.Scene {
   }
 
   preload() {
+    this.load.image("bg", bg);
     this.load.image("basket", basket);
     this.load.image("apple", apple);
   }
 
   create() {
     const { width, height } = this.scale;
+
+      this.background = this.add.image(0, 0, "bg")
+        .setOrigin(0)
+        .setDisplaySize(width, height);
+
     this.maxApples = 10;
 
     // Player
@@ -99,8 +106,11 @@ reactiveScale(width) {
   }
 
   resize(gameSize) {
-    this.physics.world.setBounds(0, 0, width, height);
-    this.player.y = height - 100;
+      const { width, height } = gameSize;
+
+      this.background.setDisplaySize(width, height);
+      this.physics.world.setBounds(0, 0, width, height);
+      this.player.y = height - 100;
   }
 
   gameOver() {
