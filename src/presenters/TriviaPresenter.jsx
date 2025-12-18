@@ -8,7 +8,7 @@ import { TriviaResultView } from "../views/TriviaViews/TriviaResultView";
 import { TriviaStartView } from "../views/TriviaViews/TriviaStartView";
 
 // Data
-import { chosenCategory, getCategories } from "../triviaSource";
+import { chosenCategory, getCategories } from "../utils/api_utils/triviaSource";
 
 function decodeHtml(html) {
     const txt = document.createElement("textarea");
