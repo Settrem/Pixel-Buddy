@@ -47,11 +47,16 @@ function makeRouter(props) {
     },
     {
       path: "/apples",
-      element: <Apples interfaceModel={props.interfaceModel}/>,
+      element: <Apples 
+      interfaceModel={props.interfaceModel}
+      userModel={props.userModel}
+      />,
     },
     {
       path: "/trivia",
-      element: <Trivia interfaceModel={props.interfaceModel}/>,
+      element: <Trivia 
+      interfaceModel={props.interfaceModel}
+      userModel={props.userModel}/>,
     },
     {
       path: "/joke",

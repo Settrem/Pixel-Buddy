@@ -106,12 +106,13 @@ const Trivia = observer(function Trivia(props) {
         setSelectedAnswer(answer);
         if (answer === currentCorrectAnswer) {
             setScore(prev => prev + 1);
+            props.userModel.buddyModel.addHappiness(5);
         }
     }
 
     function handleNextQuestionACB() {
         const nextIndex = questionIndex + 1;
-        
+
         if (nextIndex < questions.length) {
             setQuestionIndex(nextIndex);
             setSelectedAnswer(null);
@@ -165,6 +166,7 @@ const Trivia = observer(function Trivia(props) {
 
     return (
         <TriviaStartView
+            userModel={props.userModel}
             setBottomText={writeToBottomText}
             onTriviaStarterACB={startGameACB}
         />

@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import bg from './assets/gfxfolder/bg.png';
 import basket from './assets/gfxfolder/basket.png';
 import apple from './assets/gfxfolder/apple.png';
 
@@ -14,11 +13,10 @@ class GameScene extends Phaser.Scene {
     this.handleScoreChangeCB = data.onScoreChangeCB;
     this.handleGameOverCB = data.onGameOverCB;
     this.points = 0;
-    this.points = 0;
+    this.applesDropped = 0;
   }
 
   preload() {
-    this.load.image("game-bg", bg);
     this.load.image("basket", basket);
     this.load.image("apple", apple);
   }
@@ -26,28 +24,29 @@ class GameScene extends Phaser.Scene {
   create() {
     const { width, height } = this.scale;
     this.maxApples = 10;
-    this.applesDropped = 0;
-
-    // Background
-    this.bg = this.add.image(0, 0, "game-bg").setOrigin(0, 0);
-    this.bg.setDisplaySize(width, height);
 
     // Player
     this.player = this.physics.add.image(0, height - 100, "basket").setOrigin(0, 0);
-    this.player.setImmovable(true);
     this.player.body.allowGravity = false;
-    this.player.setScale(4); 
-    this.player.setSize(100 / 4, 20 / 4).setOffset(0, 10); 
 
     // Target
     this.target = this.physics.add.image(this.getRandomX(), -100, "apple").setOrigin(0, 0);
-    this.target.setScale(3);
     this.target.setMaxVelocity(10, speedDown);
-    this.target.setBounce(0);
     this.target.setGravityY(speedDown);
+
+    // Making the setScale reactive to screen width
+    this.reactiveScale(width);
 
     this.physics.add.overlap(this.target, this.player, this.targetHit, null, this);
     this.scale.on('resize', this.resize, this);
+  }
+reactiveScale(width) {
+    const dynamicScale = Math.max(2, (width / 400) * 1);
+    
+    this.player.setScale(dynamicScale);
+    this.target.setScale(dynamicScale);
+
+    this.player.setSize(this.player.width, this.player.height * 0.5); 
   }
 
   update() {
@@ -100,9 +99,7 @@ class GameScene extends Phaser.Scene {
   }
 
   resize(gameSize) {
-    const { width, height } = gameSize;
     this.physics.world.setBounds(0, 0, width, height);
-    this.bg.setDisplaySize(width, height);
     this.player.y = height - 100;
   }
 

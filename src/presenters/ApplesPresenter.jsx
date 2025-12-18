@@ -75,6 +75,7 @@ const Apples = observer(function Apples(props) {
 
     return (
         <ApplesStartView
+            userModel={props.userModel}
             setBottomText={writeToBottomText}
             applesStarterACB={startGameACB}
         />
