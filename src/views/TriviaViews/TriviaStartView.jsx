@@ -1,5 +1,6 @@
 import '../../styles/App.css';
 import { useEffect } from 'react';
+import { PixelButton } from '../../components/ui/PixelButton';
 
 export function TriviaStartView({ userModel, onTriviaStarterACB, setBottomText }) {
 
@@ -12,14 +13,18 @@ export function TriviaStartView({ userModel, onTriviaStarterACB, setBottomText }
     }, [setBottomText]);
 
     return (
-        <div>
-            <div>
-                <button
+        <div className="
+            bg-[var(--theme-color)] w-full h-full
+            relative p-5 flex flex-col items-center justify-center
+            text-4xl
+            ">
+            <div className="w-[60%] h-auto">
+                <PixelButton
                     className="cool-btn"
-                    onClick={onTriviaStarterACB}
+                    btnClickCB={onTriviaStarterACB}
                 >
-                    Start Trivia!
-                </button>
+                    <p className="my-5 flex items-center justify-center">Start Trivia!</p>
+                </PixelButton>
             </div>
         </div>
     );

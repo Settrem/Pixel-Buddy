@@ -1,16 +1,21 @@
 import '../../styles/App.css';
+import { PixelButton } from '../../components/ui/PixelButton';
 
 export function TriviaCategoryView({ categories, onChooseCategoryACB }) {
     return (
-        <div className="trivia-grid">
+        <div className="
+            bg-[var(--theme-color)] w-full h-full
+            relative p-5 flex flex-col items-center justify-center gap-5
+            text-4xl
+            ">
             {categories.map((category) => (
-                <button
+                <PixelButton
                     key={category.id}
                     className="cool-btn"
-                    onClick={() => onChooseCategoryACB(category.id)}
+                    btnClickCB={() => onChooseCategoryACB(category.id)}
                 >
                     {category.name}
-                </button>
+                </PixelButton>
             ))}
         </div>
     );

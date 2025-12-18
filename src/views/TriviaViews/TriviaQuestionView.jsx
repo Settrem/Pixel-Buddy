@@ -1,4 +1,5 @@
 import '../../styles/App.css';
+import { PixelButton } from '../../components/ui/PixelButton';
 
 export function TriviaQuestionView({ answers, correctAnswer, selectedAnswer, onAnswer, onNextQuestion, currentIndex, totalQuestions }) {
     function getButtonColor(answer) {
@@ -14,23 +15,28 @@ export function TriviaQuestionView({ answers, correctAnswer, selectedAnswer, onA
     }
 
     return (
-        <div>
+        <div className="
+            bg-[var(--theme-color)] w-full h-full
+            relative p-5 flex flex-col items-center justify-center
+            text-4xl
+            ">
             <div className="trivia-text">
                 Question {currentIndex + 1} of {totalQuestions}
             </div>
-
             <div>
                 <div className="trivia-grid">
                     {answers.map((answer, index) => (
-                        <button
-                            key={index}
-                            className="cool-btn"
-                            style={{ color: getButtonColor(answer) }}
-                            onClick={() => !selectedAnswer && onAnswer(answer)}
-                            disabled={selectedAnswer !== null}
-                        >
-                            {answer}
-                        </button>
+                        <div className="w-[40%]">                            
+                            <PixelButton
+                                key={index}
+                                className="cool-btn"
+                                style={{ color: getButtonColor(answer) }}
+                                btnClickCB={() => !selectedAnswer && onAnswer(answer)}
+                                disabled={selectedAnswer !== null}
+                            >
+                                {answer}
+                            </PixelButton>
+                        </div>
                     ))}
                 </div>
             </div>
@@ -45,12 +51,12 @@ export function TriviaQuestionView({ answers, correctAnswer, selectedAnswer, onA
 
             {selectedAnswer && (
                 <div>
-                    <button
+                    <PixelButton
                         className="cool-btn trivia-next"
-                        onClick={onNextQuestion}
+                        btnClickCB={onNextQuestion}
                     >
                         {currentIndex + 1 === totalQuestions ? "See Results" : "Next Question →"}
-                    </button>
+                    </PixelButton>
                 </div>
             )}
         </div>
