@@ -2,29 +2,48 @@ export const customs = {
     buddyType: [
         'basic',
         'monkey',
-        'man'
+        'man',
+        'cat',
+        'demon',
+        'penguin'
     ],
     clothesHat: [
         'bald',
         'mlo',
-        'hair'
+        'hair',
+        'beanie',
+        'cap',
+        'straw hat',
+        'fedora'
     ],
 
     clothesTop: [
         'shirtless',
         'tee',
         'hoodie',
-        'buttonup'
+        'buttonup',
+        'hawaiian shirt',
+        'jacket',
+        'tank top'
     ],
 
     clothesBottom: [
         'balls out',
         'shorts',
-        'suit'
+        'suit',
+        'jeans',
+        'sweatpants',
+        'wide pants',
+        'skirt'
     ],
 
     clothesShoes: [
         'barefoot',
-        'sandals'
+        'sandals',
+        'dress shoes',
+        'sneakers',
+        'heels',
+        'slippers',
+        'boots'
     ]
 }

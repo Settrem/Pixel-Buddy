@@ -7,6 +7,7 @@ function BackgroundView(props) {
             src={props.background}
             className="absolute inset-0 w-full h-full object-cover z-10"
             alt=""
+            style={{imageRendering:"pixelated"}}
         />
         
         <img   /* Foreground */
