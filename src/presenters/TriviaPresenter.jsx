@@ -124,7 +124,7 @@ const Trivia = observer(function Trivia(props) {
     }
 
     function backToBuddyABC() {
-        // Change Window something something
+        window.location.hash = "/buddy";
     }
 
 

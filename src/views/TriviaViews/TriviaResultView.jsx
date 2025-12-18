@@ -1,5 +1,6 @@
 import '../../styles/App.css';
 import { useEffect } from 'react';
+import { PixelButton } from '../../components/ui/PixelButton';
 
 export function TriviaResultView({ score, total, setBottomText, onRestartACB, onBackToBuddyABC }) {
 
@@ -10,28 +11,29 @@ export function TriviaResultView({ score, total, setBottomText, onRestartACB, on
     }, [score, total, setBottomText]);
 
    return (
-        <div className="trivia-grid trivia-text">
+        <div className="
+            bg-[var(--theme-color)] w-full h-full
+            relative p-5 flex flex-col items-center justify-center
+            text-4xl gap-5
+            ">
             <h1 style={{
                 borderColor: "black",
                 fontSize: "2em"
             }}
             >Game Over!</h1>
-            <div style={{
-                display: "flex",
-                flexDirection: "column",
-            }}>
-                <button
+            <div className="flex flex-col gap-5">
+                <PixelButton
                     className="cool-btn"
-                    onClick={onBackToBuddyABC}
+                    btnClickCB={onBackToBuddyABC}
                 >
                     Back To Buddy
-                </button>
-                <button
+                </PixelButton>
+                <PixelButton
                     className="cool-btn"
-                    onClick={onRestartACB}
+                    btnClickCB={onRestartACB}
                 >
                     Try Again?
-                </button>
+                </PixelButton>
             </div>
         </div>
     );

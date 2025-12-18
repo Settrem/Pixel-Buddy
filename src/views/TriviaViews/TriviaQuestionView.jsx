@@ -15,18 +15,19 @@ export function TriviaQuestionView({ answers, correctAnswer, selectedAnswer, onA
     }
 
     return (
-        <div className="
+        <div className="overflow-scroll
             bg-[var(--theme-color)] w-full h-full
-            relative p-5 flex flex-col items-center justify-center
-            text-4xl
-            ">
-            <div className="trivia-text">
+            relative p-5 flex flex-col items-center gap-5
+            text-4xl"
+            style={{scrollbarWidth: "none", msOverflowStyle: "none", }}
+            >
+            <div className="text-[40px] lg:text-[60px] sm:text-[40px]">
                 Question {currentIndex + 1} of {totalQuestions}
             </div>
             <div>
                 <div className="trivia-grid">
                     {answers.map((answer, index) => (
-                        <div className="w-[40%]">                            
+                        <div className="w-[90%] sm:w-[80%] text-2xl lg:text-4xl">                            
                             <PixelButton
                                 key={index}
                                 className="cool-btn"
@@ -41,24 +42,26 @@ export function TriviaQuestionView({ answers, correctAnswer, selectedAnswer, onA
                 </div>
             </div>
 
-            <div>
+            <div className='h-full flex flex-col items-center justify-center'>
+                <div>
+                    {selectedAnswer && (
+                        <p className="text-[40px] lg:text-[60px] sm:text-[40px]">
+                            {selectedAnswer === correctAnswer ? "Correct!" : "Incorrect!"}
+                        </p>
+                    )}
+                </div>
+
                 {selectedAnswer && (
-                    <p className="trivia-text">
-                        {selectedAnswer === correctAnswer ? "Correct!" : "Incorrect!"}
-                    </p>
+                    <div className="text-2xl lg:text-4xl">
+                        <PixelButton
+                            className="cool-btn trivia-next"
+                            btnClickCB={onNextQuestion}
+                        >
+                            {currentIndex + 1 === totalQuestions ? "See Results" : "Next Question →"}
+                        </PixelButton>
+                    </div>
                 )}
             </div>
-
-            {selectedAnswer && (
-                <div>
-                    <PixelButton
-                        className="cool-btn trivia-next"
-                        btnClickCB={onNextQuestion}
-                    >
-                        {currentIndex + 1 === totalQuestions ? "See Results" : "Next Question →"}
-                    </PixelButton>
-                </div>
-            )}
         </div>
     );
 }
