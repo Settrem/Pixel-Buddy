@@ -7,6 +7,7 @@ import { HashRouter } from "react-router-dom";
 import { BORDERTHICKNESS } from './constants';
 import { reaction } from "mobx";
 import { Trivia } from './presenters/TriviaPresenter';
+import { Apples } from './presenters/ApplesPresenter.jsx';
 import { useState } from 'react';
 import { connectToPersistence } from './persistence/firestoreModel';
 import { useEffect } from 'react';
@@ -54,11 +55,16 @@ function makeRouter(props) {
     },
     {
       path: "/apples",
-      element: <PixelTextBox>apples</PixelTextBox>,
+      element: <Apples 
+      interfaceModel={props.interfaceModel}
+      userModel={props.userModel}
+      />,
     },
     {
       path: "/trivia",
-      element: <Trivia interfaceModel={props.interfaceModel}/>,
+      element: <Trivia 
+      interfaceModel={props.interfaceModel}
+      userModel={props.userModel}/>,
     },
     {
       path: "/joke",

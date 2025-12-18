@@ -1,15 +1,15 @@
 import '../../styles/App.css';
 import { useEffect } from 'react';
 
-export function TriviaResultView({ score, total, setBottomText, onRestartACB, onBackToBuddyABC }) {
+export function ApplesResultView({ score, total, setBottomText, onRestartACB, onBackToBuddyABC }) {
 
     useEffect(() => {
         if (setBottomText) {
-            setBottomText(`Nice Work! You got ${score} out of ${total} questions!`);
+            setBottomText(`Nice Work! You caught ${score} out of ${total} apples!`);
         }
     }, [score, total, setBottomText]);
 
-   return (
+    return (
         <div className="trivia-grid trivia-text">
             <h1 style={{
                 borderColor: "black",
@@ -36,4 +36,3 @@ export function TriviaResultView({ score, total, setBottomText, onRestartACB, on
         </div>
     );
 }
-

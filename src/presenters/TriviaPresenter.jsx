@@ -1,139 +1,176 @@
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
+
+// Views
 import { TriviaCategoryView } from "../views/TriviaViews/TriviaCategoryView";
 import { TriviaQuestionView } from "../views/TriviaViews/TriviaQuestionView";
 import { TriviaResultView } from "../views/TriviaViews/TriviaResultView";
 import { TriviaStartView } from "../views/TriviaViews/TriviaStartView";
-import { chosenCategory, getCategories } from "../utils/api_utils/triviaSource";
-/** TODO
- * CLEAN UP AND REFORM
- */
 
-const Trivia = observer(
-    function Trivia(props) {
-        // Base State
-        const [uiState, setUiState] = useState("TriviaStart");
+// Data
+import { chosenCategory, getCategories } from "../triviaSource";
 
-        // Data States
-        const [categories, setCategories] = useState([]);
-        const [questions, setQuestions] = useState([]);
-        const [currentQuestion, setCurrentQuestion] = useState(null);
-        const [questionIndex, setQuestionIndex] = useState(0);
-        const [score, setScore] = useState(0);
-        const [selectedAnswer, setSelectedAnswer] = useState(null);
+function decodeHtml(html) {
+    const txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
 
-        function writeToBottomText(message) {
+const Trivia = observer(function Trivia(props) {
+    // Base State
+    const [uiState, setUiState] = useState("TriviaStartView");
+
+    // Data States
+    const [categories, setCategories] = useState([]);
+    const [questions, setQuestions] = useState([]);
+    const [questionIndex, setQuestionIndex] = useState(0);
+    const [score, setScore] = useState(0);
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
+
+    // View Models
+    const [currentQuestionText, setCurrentQuestionText] = useState("");
+    const [currentShuffledAnswers, setCurrentShuffledAnswers] = useState([]);
+    const [currentCorrectAnswer, setCurrentCorrectAnswer] = useState("");
+
+    function writeToBottomText(message) {
+        if (props.interfaceModel) {
             props.interfaceModel.setBoxTextTo(message);
         }
+    }
 
-        function shuffleTime(data) {
-            const shuffled = [...data];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            return shuffled;
+    function shuffleArray(data) {
+        const shuffled = [...data];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
+        return shuffled;
+    }
 
-        useEffect(() => {
-            if (uiState !== "categoryChoosing") return;
+    function setupQuestionForView(questionObj) {
+        if (!questionObj) return;
 
+        // Decode text
+        const decodedQuestion = decodeHtml(questionObj.question);
+        const decodedCorrect = decodeHtml(questionObj.correct_answer);
+        const decodedIncorrect = questionObj.incorrect_answers.map(decodeHtml);
+
+        // Shuffle answers
+        const allAnswers = [...decodedIncorrect, decodedCorrect];
+        const shuffled = shuffleArray(allAnswers);
+
+        // Update State
+        setCurrentQuestionText(decodedQuestion);
+        setCurrentCorrectAnswer(decodedCorrect);
+        setCurrentShuffledAnswers(shuffled);
+
+        // Write To Textbox
+        writeToBottomText(decodedQuestion);
+    }
+
+    useEffect(() => {
+        if (uiState !== "categoryChoosing") {
             getCategories()
                 .then(data => {
-                    const randomized = shuffleTime(data);
-                    const randomCategories = randomized.slice(0, 4);
-
-                    setCategories(randomCategories);
+                    const randomized = shuffleArray(data);
+                    setCategories(randomized.slice(0, 4));
                 })
                 .catch(error => console.error("Error fetching categories", error));
-        }, [uiState]);
+        }
+    }, [uiState]);
 
-        function chooseCategoryACB(id) {
-            chosenCategory(id).then(data => {
+    function startGameACB() {
+        setQuestionIndex(0);
+        setScore(0);
+        setUiState("categoryChoosing");
+        writeToBottomText("Please choose a category!");
+    }
+
+    function chooseCategoryACB(id) {
+        chosenCategory(id)
+            .then(data => {
                 const results = data.results || data;
-
                 if (results && results.length > 0) {
                     const gameQuestions = results.slice(0, 5);
-
                     setQuestions(gameQuestions);
-                    setCurrentQuestion(gameQuestions[0]);
-                    setQuestionIndex(0);
-                    setScore(0);
-                    setUiState("categoryChosen");
+                    setupQuestionForView(gameQuestions[0]);
+                    setUiState("triviaGame");
                 } else {
                     console.error("No questions found in response:", data);
                 }
             })
-                .catch(console.error);
+            .catch(console.error);
+    }
+
+    function handleAnswerACB(answer) {
+        setSelectedAnswer(answer);
+        if (answer === currentCorrectAnswer) {
+            setScore(prev => prev + 1);
+            props.userModel.buddyModel.addHappiness(5);
         }
+    }
 
-        function handleAnswersACB(selectedAnswer) {
-            setSelectedAnswer(selectedAnswer);
-            if (selectedAnswer === currentQuestion.correct_answer) {
-                setScore(prevScore => prevScore + 1);
-            } else {
-                return;
-            }
+    function handleNextQuestionACB() {
+        const nextIndex = questionIndex + 1;
+
+        if (nextIndex < questions.length) {
+            setQuestionIndex(nextIndex);
+            setSelectedAnswer(null);
+            setupQuestionForView(questions[nextIndex]);
+        } else {
+            setUiState("gameOver");
+            setSelectedAnswer(null);
         }
+    }
 
-        function handleNextQuestionACB() {
-            const nextIndex = questionIndex + 1;
+    function backToBuddyABC() {
+        // Change Window something something
+    }
 
-            if (nextIndex < questions.length) {
-                setQuestionIndex(nextIndex);
-                setCurrentQuestion(questions[nextIndex]);
-                setSelectedAnswer(null);
-            } else {
-                setUiState("gameOver");
-                setCurrentQuestion(null);
-                setSelectedAnswer(null);
-            }
-        }
 
-        function triviaStarterACB() {
-            setUiState("categoryChoosing");
-        }
-
-        if (uiState === "gameOver") {
-            return (
-                <TriviaResultView
-                    setBottomText={writeToBottomText}
-                    score={score}
-                    total={questions.length}
-                />
-            );
-        }
-
-        if (uiState === "categoryChosen") {
-            return (
-                <TriviaQuestionView
-                    setBottomText={writeToBottomText}
-                    question={currentQuestion}
-                    selectedAnswer={selectedAnswer}
-                    onAnswer={handleAnswersACB}
-                    onNextQuestion={handleNextQuestionACB}
-                    currentIndex={questionIndex}
-                    totalQuestions={questions.length}
-                />
-            );
-        }
-
-        if (uiState === "categoryChoosing") {
-            return (
-                <TriviaCategoryView
-                    setBottomText={writeToBottomText}
-                    categories={categories}
-                    chooseCategory={chooseCategoryACB}
-                />
-            );
-        }
-
+    if (uiState === "categoryChoosing") {
         return (
-            <TriviaStartView
-                setBottomText={writeToBottomText}
-                triviaStarter={triviaStarterACB}
+            <TriviaCategoryView
+                categories={categories}
+                onChooseCategoryACB={chooseCategoryACB}
             />
         );
-    });
+    }
+
+    if (uiState === "triviaGame") {
+        return (
+            <TriviaQuestionView
+                questionText={currentQuestionText}
+                answers={currentShuffledAnswers}
+                correctAnswer={currentCorrectAnswer}
+                selectedAnswer={selectedAnswer}
+                onAnswer={handleAnswerACB}
+                onNextQuestion={handleNextQuestionACB}
+                currentIndex={questionIndex}
+                totalQuestions={questions.length}
+            />
+        );
+    }
+
+    if (uiState === "gameOver") {
+        return (
+            <TriviaResultView
+                score={score}
+                total={questions.length}
+                setBottomText={writeToBottomText}
+                onRestartACB={startGameACB}
+                onBackToBuddyABC={backToBuddyABC}
+            />
+        );
+    }
+
+    return (
+        <TriviaStartView
+            userModel={props.userModel}
+            setBottomText={writeToBottomText}
+            onTriviaStarterACB={startGameACB}
+        />
+    );
+});
 
 export { Trivia };

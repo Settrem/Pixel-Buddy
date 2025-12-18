@@ -1,9 +1,8 @@
 import '../../styles/App.css';
 import { useEffect } from 'react';
 
-export function TriviaStartView({ userModel, onTriviaStarterACB, setBottomText }) {
-
-        const message = `Welcome To Trivia. Are you ready? If you leave before the game ends, ${userModel.buddyModel.name} won't gain any happiness!`;
+export function ApplesStartView({userModel, applesStarterACB, setBottomText }) {
+    const message = `PixelBuddies also need to eat! Help ${userModel.buddyModel.name} catch as many apples as possible.`;
 
     useEffect(() => {
         if (setBottomText) {
@@ -16,9 +15,9 @@ export function TriviaStartView({ userModel, onTriviaStarterACB, setBottomText }
             <div>
                 <button
                     className="cool-btn"
-                    onClick={onTriviaStarterACB}
+                    onClick={applesStarterACB}
                 >
-                    Start Trivia!
+                    Start Apple Catcher!
                 </button>
             </div>
         </div>

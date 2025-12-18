@@ -42,6 +42,22 @@
   color: #888;
 }
 
+/* SHARED */
+.cool-btn {
+  width: 420px;
+  height: 69px;
+  margin-top: 5%;
+  
+  background-color: white;
+  border-radius: 20px;
+  border: black solid;
+
+  font-size: clamp(10px, 2vw, 20px);
+}
+.cool-btn:hover {
+  opacity: 0.9;
+}
+
 /* TRIVIA EXCLUSIVE */
 /**
 ** TODO
@@ -58,24 +74,8 @@
   row-gap: 50px;
 }
 
-.trivia-btn {
-  width: 420px;
-  height: 69px;
-  margin-top: 5%;
-  
-  background-color: white;
-  border-radius: 20px;
-  border: black solid;
-
-  font-size: clamp(10px, 2vw, 20px);
-}
-
 .trivia-next {
   margin-top: -0.5%;
-}
-
-.trivia-btn:hover {
-  opacity: 0.9;
 }
 
 .trivia-text {
