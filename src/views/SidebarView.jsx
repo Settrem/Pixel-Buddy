@@ -36,8 +36,8 @@ function SidebarView(props) {
                     <div>
                         <CarouselPrevious 
                             className="relative top-0 rotate-270"
-                            prevImg="./src/assets/gfxfolder/arrow.png"
-                            prevImgDisabled="./src/assets/gfxfolder/arrowPressed.png">
+                            prevImg="../../public/assets/gfxfolder/arrow.png"
+                            prevImgDisabled="../../public/assets/gfxfolder/arrowPressed.png">
                         </CarouselPrevious>
                     </div>
                     <CarouselContent className="-mt-[5px] h-50 sm:h-[430px] sm:gap-[0px]">
@@ -46,8 +46,8 @@ function SidebarView(props) {
                     <div>
                         <CarouselNext 
                             className="relative top-0"
-                            nextImg="./src/assets/gfxfolder/arrow.png"
-                            nextImgDisabled="./src/assets/gfxfolder/arrowPressed.png">
+                            nextImg="../../public/assets/gfxfolder/arrow.png"
+                            nextImgDisabled="../../public/assets/gfxfolder/arrowPressed.png">
                         </CarouselNext>
                     </div>
                 </Carousel>
@@ -56,7 +56,5 @@ function SidebarView(props) {
         </div>
     );
 }
-
-//<img className="h-[33px]" src="./src/assets/gfxfolder/arrow.png"/>
 
 export { SidebarView } 

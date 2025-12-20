@@ -25,7 +25,7 @@ async function signUp(email, password, buddyName) {
                 clothesTop: 0,
                 clothesBottom: 0,
                 clothesShoes: 0,
-                stats: { hunger: 100, happiness: 100, energy: 100 },
+                stats: { hunger: 20, happiness: 40, energy: 100 },
                 lastTimeInteracted: new Date(),
             },
             uiTheme: [84,92,158],

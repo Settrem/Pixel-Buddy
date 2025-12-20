@@ -1,6 +1,5 @@
 import { BackgroundView } from "../views/BackgroundVIew";
 import { observer } from "mobx-react-lite";
-import night from "../assets/gfxfolder/nightBackground.png"
 
 const Background = observer(
 function BackgroundPresenter(props){
