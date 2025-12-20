@@ -27,7 +27,7 @@ import { StatusBarPresenter } from './presenters/StatusBarPresenter.jsx';
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
     { path: "settings", type: "SETTINGS", },
-    { path: "apples", type: "APPLES", },
+    { path: "apples", type: "FEED", },
     { path: "trivia", type: "TRIVIA", },
     { path: "joke", type: "JOKE", },
     { path: "clothes", type: "CLOTHES", },
