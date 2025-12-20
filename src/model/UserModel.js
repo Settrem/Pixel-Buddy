@@ -38,7 +38,6 @@ export const userModel = {
             
             if(energygain>0) {
                 this.stats.energy = Math.max(0, this.stats.energy + energygain);
-                if(this.stats.energy > 100) this.stats.energy = 100; 
             }
         },
 
@@ -51,11 +50,9 @@ export const userModel = {
             
             if(hungerGained>0) {
                 this.stats.hunger = Math.max(0, this.stats.hunger - hungerGained);
-                if(this.stats.hunger > 100) this.stats.hunger = 100; 
             }
             if(happinessLost>0) {
                 this.stats.happiness = Math.max(0, this.stats.happiness - happinessLost);
-                if(this.stats.happiness > 100) this.stats.happiness = 100; 
             }
         },
         
