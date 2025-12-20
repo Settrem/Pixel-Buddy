@@ -6,6 +6,7 @@ import { ApplesStartView } from "../views/ApplesViews/ApplesStartView";
 import { ApplesGameView } from "../views/ApplesViews/ApplesGameView";
 import { ApplesResultView } from "../views/ApplesViews/ApplesResultView";
 import { NoEnergyGameView } from "../views/NoEnergyGameView";
+import { StatusBarPresenter } from "./StatusBarPresenter";
 import { BuddyView } from "../views/BuddyView";
 
 const Apples = observer(function Apples(props) {
@@ -24,11 +25,13 @@ const Apples = observer(function Apples(props) {
 
     function startGameACB() {
         setScore(0);
+        props.userModel.buddyModel.energyLossAfterActivity(20);
         setUiState("applesStart");
         writeToBottomText("Current Score: 0");
     }
 
     function handleScoreUpdateCB(newScore) {
+        props.userModel.buddyModel.addHunger(10);
         setScore(newScore);
         writeToBottomText(`Current Score: ${newScore}`);
     }
@@ -46,19 +49,27 @@ const Apples = observer(function Apples(props) {
     if(props.userModel.buddyModel.stats.energy <= 0){
         writeToBottomText("Maybe we should take a break, please come back in some time and I may be fully rested up !!! ");
         return(
-            <NoEnergyGameView></NoEnergyGameView>
+            <div className="w-full h-full">
+                <div className="absolute opacity-30 hover:opacity-100 transition-opacity duration-200">
+                    <StatusBarPresenter userModel = {props.userModel}/>
+                </div>
+                <NoEnergyGameView></NoEnergyGameView>
+            </div>
         );
     }
 
     if (uiState === "gameOver") {
         return (
-            <ApplesResultView
-                score={score}
-                total={totalApples}
-                setBottomText={writeToBottomText}
-                onRestartACB={startGameACB}
-                onBackToBuddyABC={backToBuddyABC}
-            />
+            <div className="w-full h-full">
+                <StatusBarPresenter userModel = {props.userModel}/>
+                <ApplesResultView
+                    score={score}
+                    total={totalApples}
+                    setBottomText={writeToBottomText}
+                    onRestartACB={startGameACB}
+                    onBackToBuddyABC={backToBuddyABC}
+                />
+            </div>
         );
     }
 
@@ -71,6 +82,7 @@ const Apples = observer(function Apples(props) {
                 flexDirection: "column",
                 overflow: "hidden"
             }}>
+                <StatusBarPresenter userModel = {props.userModel}/>
                 <div style={{ flex: 1, width: "100%", position: "relative" }}>
                     <ApplesGameView
                         onScoreUpdateCB={handleScoreUpdateCB}
@@ -82,11 +94,14 @@ const Apples = observer(function Apples(props) {
     }
 
     return (
-        <ApplesStartView
-            userModel={props.userModel}
-            setBottomText={writeToBottomText}
-            applesStarterACB={startGameACB}
-        />
+        <div className="w-full h-full">
+            <StatusBarPresenter userModel = {props.userModel}/>
+            <ApplesStartView
+                userModel={props.userModel}
+                setBottomText={writeToBottomText}
+                applesStarterACB={startGameACB}
+            />
+        </div>
     );
 });
 

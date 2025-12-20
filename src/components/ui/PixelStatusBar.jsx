@@ -9,7 +9,7 @@ const PixelStatusBar = observer(
 function PixelStatusBar(props){
     return (
         <div 
-            className="w-full h-[15px] sm:h-[36px] flex flex-row items-center cursor-pointer gap-[5px]"
+            className="w-full h-[15px] sm:h-[36px] flex flex-row items-center cursor-default gap-[5px]"
         >
             <img className="w-8 sm:w-[40px]" src={props.statusImage} alt="" style={{imageRendering: "pixelated"}} />
             <div 

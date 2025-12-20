@@ -25,7 +25,7 @@ const StatusBarPresenter= observer(
 
 
         return(
-            <div className="absolute z-50">
+            <div className="absolute cursor-default z-50 opacity-30 hover:opacity-100 transition-opacity duration-200">
                 <StatusBarView statusForm = {statusform}/>
             </div>
         );

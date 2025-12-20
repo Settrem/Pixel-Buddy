@@ -7,6 +7,7 @@ import { TriviaQuestionView } from "../views/TriviaViews/TriviaQuestionView";
 import { TriviaResultView } from "../views/TriviaViews/TriviaResultView";
 import { TriviaStartView } from "../views/TriviaViews/TriviaStartView";
 import { NoEnergyGameView } from "../views/NoEnergyGameView";
+import { StatusBarPresenter } from "./StatusBarPresenter";
 
 // Data
 import { chosenCategory, getCategories } from "../utils/api_utils/triviaSource";
@@ -107,7 +108,9 @@ const Trivia = observer(function Trivia(props) {
         setSelectedAnswer(answer);
         if (answer === currentCorrectAnswer) {
             setScore(prev => prev + 1);
-            props.userModel.buddyModel.addHappiness(5);
+            props.userModel.buddyModel.addHappiness(10);
+        } else {
+            props.userModel.buddyModel.energyLossAfterActivity(5);
         }
     }
 
@@ -131,52 +134,67 @@ const Trivia = observer(function Trivia(props) {
     if(props.userModel.buddyModel.stats.energy <= 0){
         writeToBottomText("Maybe we should take a break, please come back in some time and I may be fully rested up !!! ");
         return(
-            <NoEnergyGameView></NoEnergyGameView>
+            <div className="w-full h-full">
+                <StatusBarPresenter userModel = {props.userModel}/>
+                <NoEnergyGameView></NoEnergyGameView>
+            </div>
         );
     }
 
     if (uiState === "categoryChoosing") {
         return (
-            <TriviaCategoryView
-                categories={categories}
-                onChooseCategoryACB={chooseCategoryACB}
-            />
+            <div className="w-full h-full">
+                <StatusBarPresenter userModel = {props.userModel}/>
+                <TriviaCategoryView
+                    categories={categories}
+                    onChooseCategoryACB={chooseCategoryACB}
+                />
+            </div>
         );
     }
 
     if (uiState === "triviaGame") {
         return (
-            <TriviaQuestionView
-                questionText={currentQuestionText}
-                answers={currentShuffledAnswers}
-                correctAnswer={currentCorrectAnswer}
-                selectedAnswer={selectedAnswer}
-                onAnswer={handleAnswerACB}
-                onNextQuestion={handleNextQuestionACB}
-                currentIndex={questionIndex}
-                totalQuestions={questions.length}
-            />
+            <div className="w-full h-full">
+                <StatusBarPresenter userModel = {props.userModel}/>
+                <TriviaQuestionView
+                    questionText={currentQuestionText}
+                    answers={currentShuffledAnswers}
+                    correctAnswer={currentCorrectAnswer}
+                    selectedAnswer={selectedAnswer}
+                    onAnswer={handleAnswerACB}
+                    onNextQuestion={handleNextQuestionACB}
+                    currentIndex={questionIndex}
+                    totalQuestions={questions.length}
+                />
+            </div>
         );
     }
 
     if (uiState === "gameOver") {
         return (
-            <TriviaResultView
-                score={score}
-                total={questions.length}
-                setBottomText={writeToBottomText}
-                onRestartACB={startGameACB}
-                onBackToBuddyABC={backToBuddyABC}
-            />
+            <div className="w-full h-full">
+                <StatusBarPresenter userModel = {props.userModel}/>
+                <TriviaResultView
+                    score={score}
+                    total={questions.length}
+                    setBottomText={writeToBottomText}
+                    onRestartACB={startGameACB}
+                    onBackToBuddyABC={backToBuddyABC}
+                />
+            </div>
         );
     }
 
     return (
-        <TriviaStartView
-            userModel={props.userModel}
-            setBottomText={writeToBottomText}
-            onTriviaStarterACB={startGameACB}
-        />
+        <div className="w-full h-full">
+            <StatusBarPresenter userModel = {props.userModel}/>
+            <TriviaStartView
+                userModel={props.userModel}
+                setBottomText={writeToBottomText}
+                onTriviaStarterACB={startGameACB}
+            />
+        </div>
     );
 });
 
