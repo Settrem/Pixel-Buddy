@@ -10,15 +10,15 @@ function BackgroundPresenter(props){
     const hour = new Date().getHours();
 
     if(rain > snow) {
-        background = "../../public/assets/rainBackground.png";
-        foreground = "../../public/assets/rainTransparent.gif"
+        background = "/assets/rainBackground.png";
+        foreground = "/assets/rainTransparent.gif"
     } else if(rain <= snow && snow ) {
-        background = "../../public/assets/snowBackground.png";
-        foreground = "../../public/assets/snowing.gif"
+        background = "/assets/snowBackground.png";
+        foreground = "/assets/snowing.gif"
     } else if(hour > 19 || hour < 6){
-        background = "../../public/assets/nightBackground.png"; 
+        background = "/assets/nightBackground.png"; 
     } else {
-        background = "../../public/assets/sunBackground.png";
+        background = "/assets/sunBackground.png";
     } 
 
     return(

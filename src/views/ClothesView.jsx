@@ -25,11 +25,11 @@ export function ClothesView(props) {
             return (
                 <div className="bg-[rgba(0,0,0,0.3)] flex p-2 m-1">
                     <div className="p-[2px]" onClick={pickFormerACB}>
-                        <img className="h-[33px] rotate-180" src="../../public/assets/gfxfolder/arrow.png"/>
+                        <img className="h-[33px] rotate-180" src="/assets/gfxfolder/arrow.png"/>
                     </div>
                     <div className="bg-[rgba(0,0,0,0.5)] w-[200px] sm:w-[300px] h-[37px]">{customs[type.iiii][props.buddy[type.iiii]]}</div>
                     <div className="p-[2px]" onClick={pickNextACB}>
-                        <img className="h-[33px]" src="../../public/assets/gfxfolder/arrow.png"/>
+                        <img className="h-[33px]" src="/assets/gfxfolder/arrow.png"/>
                     </div>
                 </div>)
         }

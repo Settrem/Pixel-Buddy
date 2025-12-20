@@ -9,17 +9,17 @@ const StatusBarPresenter= observer(
             {
                 status: props.userModel.buddyModel.stats.hunger,
                 color: "orange",
-                image: "../../public/assets/hunger.png",
+                image: "/assets/hunger.png",
             },
             {
                 status: props.userModel.buddyModel.stats.happiness,
                 color: "red",
-                image: "../../public/assets/happy.png",
+                image: "/assets/happy.png",
             },
             {
                 status: props.userModel.buddyModel.stats.energy,
                 color: "yellow",
-                image: "../../public/assets/energy.png",
+                image: "/assets/energy.png",
             },
         ] 
 

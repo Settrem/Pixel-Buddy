@@ -53,20 +53,18 @@ function SignUpPresenter(props){
     }
 
     return (
-    <div className="">
-        <SignUpView
-            email = {email}
-            setEmail = {setEmail}
-            password = {password}
-            setPassword = {setPassword}
-            buddyName = {buddyName}
-            setBuddyName = {setBuddyName}
-            sendSignUpFormCB = {sendSignUpFormACB}
-            switchToLogInACB = {props.switchToLogInCB}
-            errorMessage={errorMessage}
-            clearError={() => setErrorMessage(null)}
-        />
-    </div>
+    <SignUpView
+        email = {email}
+        setEmail = {setEmail}
+        password = {password}
+        setPassword = {setPassword}
+        buddyName = {buddyName}
+        setBuddyName = {setBuddyName}
+        sendSignUpFormCB = {sendSignUpFormACB}
+        switchToLogInACB = {props.switchToLogInCB}
+        errorMessage={errorMessage}
+        clearError={() => setErrorMessage(null)}
+    />
     );
 }
 

@@ -3,7 +3,7 @@ import { PixelTextBox } from "../components/ui/PixelTextBox";
 function BottombarView(props){
 
   return (
-    <div className="bg-[var(--theme-color)] flex flex-row justify-center border-[10px] border-t-0 border-black w-[100%] p-[20px] h-full sm:p-[30px]">
+    <div className="bg-[var(--theme-color)] flex flex-row justify-center border-[10px] border-t-0 border-black w-[100%] p-[20px] h-full min:h-max sm:p-[30px]">
         <div className = "min-h-[199px] min-w-full">
           <PixelTextBox>
               {props.children}
