@@ -56,9 +56,7 @@ const Apples = observer(function Apples(props) {
         writeToBottomText("Maybe we should take a break, please come back in some time and I may be fully rested up !!! ");
         return(
             <div className="w-full h-full">
-                <div className="absolute opacity-30 hover:opacity-100 transition-opacity duration-200">
-                    <StatusBarPresenter userModel = {props.userModel}/>
-                </div>
+                <StatusBarPresenter userModel = {props.userModel}/>
                 <NoEnergyGameView></NoEnergyGameView>
             </div>
         );

@@ -12,7 +12,7 @@ function BackgroundView(props) {
         
         <img   /* Foreground */
             src={props.foreground}
-            className="absolute inset-0 w-full h-full object-cover z-20"
+            className="absolute inset-0 w-full h-full object-cover z-200"
             alt=""
         />
     </div>

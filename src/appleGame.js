@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import basket from './assets/gfxfolder/basket.png';
 import apple from './assets/gfxfolder/apple.png';
-import bg from '../public/assets/sunBackground.png';
+import bg from './assets/gfxfolder/appleGame.png';
 
 const speedDown = 1000;
 
