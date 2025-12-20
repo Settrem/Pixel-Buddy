@@ -33,7 +33,7 @@ export function ApplesGameView(props) {
         <div className="relative w-full h-full">
             {loading && (
                 <div className="absolute inset-0 z-50 flex items-center justify-center p-5 bg-[var(--theme-color)]">
-                    <span className="text-4xl font-bold">Get ready to catch the apples!!!</span>    
+                    <span className="text-4xl font-bold">Get ready to catch the apples!!!</span> 
                 </div>
             )}
 
