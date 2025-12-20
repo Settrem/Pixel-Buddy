@@ -1,15 +1,24 @@
 import { BuddyComponent } from "../components/ui/buddy";
 import { customs } from "../model/buddyCustomizations.js"
 import { observer } from "mobx-react-lite";
+import { useRef } from "react";
+import selection from "../assets/sfx/change_clothes.mp3";
 
 export function ClothesView(props) {
     const Changer = observer(
         function changer(type){
+            
+            const audioRef = useRef(new Audio(selection));
+            
             function pickNextACB(){
+                audioRef.current.currentTime = 0;
+                audioRef.current.play();
                 props.pickNextCB(type.iiii);
             }
 
             function pickFormerACB(){
+                audioRef.current.currentTime = 0;
+                audioRef.current.play();
                 props.pickFormerCB(type.iiii);
             }
 

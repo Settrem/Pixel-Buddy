@@ -8,10 +8,14 @@ import { ApplesResultView } from "../views/ApplesViews/ApplesResultView";
 import { NoEnergyGameView } from "../views/NoEnergyGameView";
 import { StatusBarPresenter } from "./StatusBarPresenter";
 import { BuddyView } from "../views/BuddyView";
+import { useRef } from "react";
+import appleCatch from "../assets/sfx/appleCatch.mp3";
 
 const Apples = observer(function Apples(props) {
     // Base State
     const [uiState, setUiState] = useState("ApplesStartView");
+
+    const audioRef = useRef(new Audio(appleCatch));
 
     // Data States
     const [score, setScore] = useState(0);
@@ -20,7 +24,7 @@ const Apples = observer(function Apples(props) {
     function writeToBottomText(message) {
         if (props.interfaceModel) {
             props.interfaceModel.setBoxTextTo(message);
-    }
+        }
     }
 
     function startGameACB() {
@@ -31,6 +35,8 @@ const Apples = observer(function Apples(props) {
     }
 
     function handleScoreUpdateCB(newScore) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
         props.userModel.buddyModel.addHunger(10);
         setScore(newScore);
         writeToBottomText(`Current Score: ${newScore}`);

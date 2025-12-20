@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { BORDERTHICKNESS } from "../../constants";
+import { useRef } from "react";
+import selection from "../../assets/sfx/selection.mp3";
 
 const DOUBLE = BORDERTHICKNESS * 2;
 
@@ -7,10 +9,14 @@ function PixelButton(props){
     const [isPressed, setIsPressed] = useState(false);
     const bgColor = isPressed ? "#cccccc" : "white";
 
+    const audioRef = useRef(new Audio(selection));
+
     function clickButtonACB(){
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
         props.btnClickCB(props);
     }
-
+    
     return (
         <div 
             className="w-full inline-flex flex-col items-center cursor-pointer"
