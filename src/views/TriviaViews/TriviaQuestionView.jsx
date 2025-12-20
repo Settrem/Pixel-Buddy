@@ -31,11 +31,12 @@ export function TriviaQuestionView({ answers, correctAnswer, selectedAnswer, onA
                             <PixelButton
                                 key={index}
                                 className="cool-btn"
-                                style={{ color: getButtonColor(answer) }}
                                 btnClickCB={() => !selectedAnswer && onAnswer(answer)}
                                 disabled={selectedAnswer !== null}
                             >
-                                {answer}
+                                <div style={{ color: getButtonColor(answer) }}>
+                                    {answer}
+                                </div>
                             </PixelButton>
                         </div>
                     ))}
