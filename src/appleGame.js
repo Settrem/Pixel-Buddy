@@ -26,9 +26,13 @@ class GameScene extends Phaser.Scene {
   create() {
     const { width, height } = this.scale;
 
-      this.background = this.add.image(0, 0, "bg")
-        .setOrigin(0)
-        .setDisplaySize(width, height);
+    this.background = this.add.image(0, 0, "bg")
+      .setOrigin(0)
+      .setDisplaySize(width, height);
+
+    if (this.game.events) {
+      this.game.events.emit("game-ready");
+    }
 
     this.maxApples = 10;
 
@@ -47,7 +51,8 @@ class GameScene extends Phaser.Scene {
     this.physics.add.overlap(this.target, this.player, this.targetHit, null, this);
     this.scale.on('resize', this.resize, this);
   }
-reactiveScale(width) {
+
+  reactiveScale(width) {
     const dynamicScale = Math.max(2, (width / 400) * 1);
     
     this.player.setScale(dynamicScale);
@@ -121,10 +126,11 @@ reactiveScale(width) {
   }
 }
 
-export const launchGame = (containerId, callbacks) => {
+export const launchGame = (containerId, callbacks, onReady) => {
   const config = {
     type: Phaser.AUTO,
     parent: containerId,
+    backgroundColor: 'transparent', // important
     pixelArt: true,
     scale: {
       mode: Phaser.Scale.RESIZE,
@@ -142,6 +148,11 @@ export const launchGame = (containerId, callbacks) => {
   };
 
   const game = new Phaser.Game(config);
+
+  if (onReady) {
+    game.events.once("game-ready", onReady);
+  }
+
   game.scene.start("scene-game", callbacks);
   return game;
 };
