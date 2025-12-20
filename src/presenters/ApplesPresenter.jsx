@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ApplesStartView } from "../views/ApplesViews/ApplesStartView";
 import { ApplesGameView } from "../views/ApplesViews/ApplesGameView";
 import { ApplesResultView } from "../views/ApplesViews/ApplesResultView";
+import { NoEnergyGameView } from "../views/NoEnergyGameView";
 import { BuddyView } from "../views/BuddyView";
 
 const Apples = observer(function Apples(props) {
@@ -40,6 +41,13 @@ const Apples = observer(function Apples(props) {
 
     function backToBuddyABC() {
         window.location.hash = "/buddy";
+    }
+
+    if(props.userModel.buddyModel.stats.energy <= 0){
+        writeToBottomText("Maybe we should take a break, please come back in some time and I may be fully rested up !!! ");
+        return(
+            <NoEnergyGameView></NoEnergyGameView>
+        );
     }
 
     if (uiState === "gameOver") {

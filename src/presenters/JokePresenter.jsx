@@ -11,9 +11,13 @@ function JokeAsBuddyWrapper(props) {
     }
     
     useEffect(() => {
-        writeToBottomText(generateJoke());
-        props.userModel.buddyModel.addHappiness(5);
-        props.userModel.buddyModel.energyLossAfterActivity(3);
+        if(props.userModel.buddyModel.stats.energy > 0){
+            writeToBottomText(generateJoke());
+            props.userModel.buddyModel.addHappiness(5);
+            props.userModel.buddyModel.energyLossAfterActivity(3);
+        } else {
+            writeToBottomText("I'm too tired to make any jokes, maybe we should take a break");
+        }
     }, []);
 
       return (

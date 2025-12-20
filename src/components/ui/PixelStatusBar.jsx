@@ -11,7 +11,7 @@ function PixelStatusBar(props){
         <div 
             className="w-full h-[15px] sm:h-[36px] flex flex-row items-center cursor-pointer gap-[5px]"
         >
-            <img className="h-[42px] w-[40px]" src={props.statusImage} alt="" style={{imageRendering: "pixelated"}} />
+            <img className="w-8 sm:w-[40px]" src={props.statusImage} alt="" style={{imageRendering: "pixelated"}} />
             <div 
                 className="w-full h-full border-2 sm:border-6 select-none flex flex-row items-baseline" 
                 style={{

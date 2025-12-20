@@ -6,6 +6,7 @@ import { TriviaCategoryView } from "../views/TriviaViews/TriviaCategoryView";
 import { TriviaQuestionView } from "../views/TriviaViews/TriviaQuestionView";
 import { TriviaResultView } from "../views/TriviaViews/TriviaResultView";
 import { TriviaStartView } from "../views/TriviaViews/TriviaStartView";
+import { NoEnergyGameView } from "../views/NoEnergyGameView";
 
 // Data
 import { chosenCategory, getCategories } from "../utils/api_utils/triviaSource";
@@ -127,6 +128,12 @@ const Trivia = observer(function Trivia(props) {
         window.location.hash = "/buddy";
     }
 
+    if(props.userModel.buddyModel.stats.energy <= 0){
+        writeToBottomText("Maybe we should take a break, please come back in some time and I may be fully rested up !!! ");
+        return(
+            <NoEnergyGameView></NoEnergyGameView>
+        );
+    }
 
     if (uiState === "categoryChoosing") {
         return (
