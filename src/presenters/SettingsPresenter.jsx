@@ -28,7 +28,6 @@ const Settings = observer(
 
         async function logOutACB(){
             await logOut();
-            window.location.reload();
         }
         
         return(

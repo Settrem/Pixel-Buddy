@@ -24,6 +24,7 @@ import { JokeAsBuddyWrapper } from './presenters/JokePresenter.jsx';
 import { Background } from './presenters/BackgroundPresenter.jsx';
 import { StatusBarPresenter } from './presenters/StatusBarPresenter.jsx';
 import { SettingsButtonPresenter } from './presenters/SettingsButtonPresenter.jsx';
+import { SuspenseView } from './views/SuspenseView.jsx';
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
@@ -85,29 +86,27 @@ function makeRouter(props) {
 
 const App = observer(
   function App(props) {
+    const [authUser, setAuthUser] = useState(null);
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-      if (auth.currentUser) {
-        connectToPersistence(props.userModel, reaction);
-      }
-      // Listen for login/logout events
-      const unsubscribe = auth.onAuthStateChanged((user) => {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        setAuthUser(user);
+
         if (user) {
-          console.log("User logged in:", user.uid);
           connectToPersistence(props.userModel, reaction);
-        } else {
-          console.log("User logged out");
         }
-        setIsReady(true); // auth state known
+
+        setIsReady(true);
       });
-      return () => unsubscribe();
+
+      return unsubscribe;
     }, []);
 
     // Wait until we know the auth state
-    if (!isReady) return <div className="text-white">Loading...</div>;
+    if (!isReady) return <SuspenseView />;
     // No logged-in user
-    if (!props.userModel.user) return <AuthenticationPage />;
+    if (!authUser) return <AuthenticationPage />;
     // Wait until model is ready
     if (!props.userModel.ready) return <div className="text-white">Loading user data...</div>;
 
