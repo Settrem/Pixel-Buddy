@@ -80,6 +80,7 @@ function makeRouter(props) {
       path: "/clothes",
       element: <Clothes
         model = {props.userModel}
+        interfaceModel = {props.interfaceModel}
       />,
     }
   ]);
