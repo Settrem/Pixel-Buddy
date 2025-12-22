@@ -88,7 +88,6 @@ const App = observer(
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-  
       if (auth.currentUser) {
         connectToPersistence(props.userModel, reaction);
       }

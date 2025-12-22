@@ -28,7 +28,7 @@ export const customs = {
     ],
 
     clothesBottom: [
-        'balls out',
+        'pantless',
         'shorts',
         'suit',
         'jeans',
