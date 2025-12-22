@@ -23,6 +23,7 @@ import { Settings } from './presenters/SettingsPresenter';
 import { JokeAsBuddyWrapper } from './presenters/JokePresenter.jsx';
 import { Background } from './presenters/BackgroundPresenter.jsx';
 import { StatusBarPresenter } from './presenters/StatusBarPresenter.jsx';
+import { SettingsButtonPresenter } from './presenters/SettingsButtonPresenter.jsx';
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
@@ -112,9 +113,6 @@ const App = observer(
     // Wait until model is ready
     if (!props.userModel.ready) return <div className="text-white">Loading user data...</div>;
 
-    const currentHash = window.location.hash; 
-    const showStatusBar = currentHash === "#/" || currentHash === "#/buddy";
-
     // Logged in and model ready → show main app
     return (
       <div className="h-screen flex flex-col w-[100%]">
@@ -124,7 +122,8 @@ const App = observer(
               order-0 sm:order-2
             border-black  sm:border-l-[10px] 
               relative overflow-hidden
-            '>  
+          '> 
+            <SettingsButtonPresenter/> 
             <Background interfaceModel = {props.interfaceModel} />
             <div className="relative z-10 w-full h-full"> 
               <RouterProvider router={makeRouter(props)}/>
