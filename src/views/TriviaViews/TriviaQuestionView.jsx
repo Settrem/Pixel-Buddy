@@ -30,7 +30,6 @@ export function TriviaQuestionView({ answers, correctAnswer, selectedAnswer, onA
                         <div className="w-[90%] sm:w-[80%] text-2xl lg:text-4xl">                            
                             <PixelButton
                                 key={index}
-                                className="cool-btn"
                                 btnClickCB={() => !selectedAnswer && onAnswer(answer)}
                                 disabled={selectedAnswer !== null}
                             >
@@ -55,7 +54,6 @@ export function TriviaQuestionView({ answers, correctAnswer, selectedAnswer, onA
                 {selectedAnswer && (
                     <div className="text-2xl lg:text-4xl">
                         <PixelButton
-                            className="cool-btn trivia-next"
                             btnClickCB={onNextQuestion}
                         >
                             {currentIndex + 1 === totalQuestions ? "See Results" : "Next Question →"}

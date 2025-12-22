@@ -23,13 +23,11 @@ export function TriviaResultView({ score, total, setBottomText, onRestartACB, on
             >Game Over!</h1>
             <div className="flex flex-col gap-5">
                 <PixelButton
-                    className="cool-btn"
                     btnClickCB={onBackToBuddyABC}
                 >
                     Back To Buddy
                 </PixelButton>
                 <PixelButton
-                    className="cool-btn"
                     btnClickCB={onRestartACB}
                 >
                     Try Again?
