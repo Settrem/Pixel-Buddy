@@ -20,7 +20,6 @@ export function TriviaStartView({ userModel, onTriviaStarterACB, setBottomText }
             ">
             <div className="w-[60%] h-auto">
                 <PixelButton
-                    className="cool-btn"
                     btnClickCB={onTriviaStarterACB}
                 >
                     <p className="my-5 flex items-center justify-center">Start Trivia!</p>

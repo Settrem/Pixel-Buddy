@@ -19,7 +19,6 @@ export function ApplesStartView({userModel, applesStarterACB, setBottomText }) {
             ">
             <div className="w-[60%] h-auto">
                 <PixelButton
-                    className="cool-btn"
                     btnClickCB={applesStarterACB}
                 >  
                     <p className="my-5 flex items-center justify-center">Start Apple Catcher!</p>

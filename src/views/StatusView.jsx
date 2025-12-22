@@ -12,6 +12,7 @@ const StatusBarView = observer(
         function renderStatusBars(statusType){
             return(
                 <PixelStatusBar
+                    key = {statusType.color}
                     status = {statusType.status}
                     statusColor= {statusType.color}
                     statusImage = {statusType.image}

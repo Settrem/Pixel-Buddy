@@ -12,7 +12,6 @@ export function TriviaCategoryView({ categories, onChooseCategoryACB }) {
             {categories.map((category) => (
                 <PixelButton
                     key={category.id}
-                    className="cool-btn"
                     btnClickCB={() => onChooseCategoryACB(category.id)}
                 >
                     {category.name}
