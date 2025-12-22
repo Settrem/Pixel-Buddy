@@ -8,6 +8,7 @@ import { BORDERTHICKNESS } from './constants';
 import { reaction } from "mobx";
 import { Trivia } from './presenters/TriviaPresenter';
 import { Apples } from './presenters/ApplesPresenter.jsx';
+import { Help } from './presenters/HelpPresenter.jsx';
 import { useState } from 'react';
 import { connectToPersistence } from './persistence/firestoreModel';
 import { useEffect } from 'react';
@@ -33,6 +34,7 @@ const sidebarButtons = [
     { path: "feed", type: "FEED", },
     { path: "trivia", type: "TRIVIA", },
     { path: "joke", type: "JOKE", },
+    { path: "help", type: "HELP", },
 ];
 
 function makeRouter(props) {
@@ -54,6 +56,10 @@ function makeRouter(props) {
     {
       path: "/settings",
       element: <Settings userModel = {props.userModel}/>,
+    },
+    {
+      path: "/help",
+      element: <Help/>,
     },
     {
       path: "/feed",
