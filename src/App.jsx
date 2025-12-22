@@ -29,7 +29,7 @@ import { SuspenseView } from './views/SuspenseView.jsx';
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
     { path: "clothes", type: "CLOTHES", },
-    { path: "apples", type: "FEED", },
+    { path: "feed", type: "FEED", },
     { path: "trivia", type: "TRIVIA", },
     { path: "joke", type: "JOKE", },
 ];
@@ -55,7 +55,7 @@ function makeRouter(props) {
       element: <Settings userModel = {props.userModel}/>,
     },
     {
-      path: "/apples",
+      path: "/feed",
       element: <Apples 
       interfaceModel={props.interfaceModel}
       userModel={props.userModel}
