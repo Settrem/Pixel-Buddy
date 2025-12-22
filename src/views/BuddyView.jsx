@@ -1,13 +1,14 @@
-export function BuddyView( ) {
-        return (
-            <div>
-                <h1>Buddy!</h1>
+import { BuddyComponent } from "../components/ui/buddy";
+
+function BuddyView(props) {
+    return (
+        <div className="w-full h-full">
+            <div className="w-full h-full flex overflow-hidden" style={{imageRendering: "pixelated"}}>
+                <div className="relative h-full w-full">
+                    <BuddyComponent buddy = {props.buddy}/>
+                </div>
             </div>
-        )
-    }
-    function bottomBarText() {
-        return (
-            // Here you can let buddy rest for a bit
-            0
-        );
+        </div>
+    )
 }
+export { BuddyView }

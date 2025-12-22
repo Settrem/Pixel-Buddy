@@ -1,16 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BORDERTHICKNESS } from "../../constants";
+import selection from "../../assets/sfx/selection.mp3";
 
 const DOUBLE = BORDERTHICKNESS * 2;
 
 function PixelButton(props){
     const [isPressed, setIsPressed] = useState(false);
-    const bgColor = isPressed ? "#cccccc" : "white";
-
-    function clickButtonACB(){
-        props.btnClickCB(props);
+    const [isActive, setIsActive] = useState(false);
+    
+    const audioRef = useRef(new Audio(selection));
+    
+    function getLabel() {
+        return typeof props.children === "string"
+        ? props.children.toLowerCase()
+        : "";
     }
 
+    useEffect(() => {
+        function updateActive() {
+            const label = getLabel();
+            const hash = window.location.hash.toLowerCase();
+            setIsActive(label && hash.includes(label));
+        }
+
+        updateActive(); // run once on mount
+        window.addEventListener("hashchange", updateActive);
+        return () => window.removeEventListener("hashchange", updateActive);
+    }, [props.children]);
+    
+    const bgColor = isPressed || isActive ? "#cccccc" : "white";
+
+    function clickButtonACB(){
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
+        props.btnClickCB(props);
+    }
+    
     return (
         <div 
             className="w-full inline-flex flex-col items-center cursor-pointer"

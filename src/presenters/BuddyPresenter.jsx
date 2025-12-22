@@ -2,7 +2,11 @@ import { observer } from "mobx-react-lite";
 import { BuddyView } from "../views/BuddyView";
 
 const Buddy = observer(
-    function buddy() {
-        
+    function buddyPresenter(props) {
+        return <BuddyView
+        buddy = {props.model.buddyModel}
+        />
     }
 )
+
+export { Buddy }

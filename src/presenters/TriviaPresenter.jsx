@@ -1,127 +1,201 @@
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
-import { TriviaView } from "../views/TriviaView";
-import { TriviaQuestionView } from "../views/TriviaQuestionView";
-import { TriviaResultView } from "../views/TriviaResultView";
-import { chosenCategory, getCategories } from "../triviaSource";
 
-const Trivia = observer(
-    function Trivia({ model }) {
-        // Base State
-        const [uiState, setUiState] = useState("categoryChoosing");
+// Views
+import { TriviaCategoryView } from "../views/TriviaViews/TriviaCategoryView";
+import { TriviaQuestionView } from "../views/TriviaViews/TriviaQuestionView";
+import { TriviaResultView } from "../views/TriviaViews/TriviaResultView";
+import { TriviaStartView } from "../views/TriviaViews/TriviaStartView";
+import { NoEnergyGameView } from "../views/NoEnergyGameView";
+import { StatusBarPresenter } from "./StatusBarPresenter";
 
-        // Data States
-        const [categories, setCategories] = useState([]);
-        const [questions, setQuestions] = useState([]);
-        const [currentQuestion, setCurrentQuestion] = useState(null);
-        const [questionIndex, setQuestionIndex] = useState(0); 
-        const [score, setScore] = useState(0);
-        const [selectedAnswer, setSelectedAnswer] = useState(null);
+// Data
+import { chosenCategory, getCategories } from "../utils/api_utils/triviaSource";
 
-        function shuffleTime(data) {
-            const shuffled = [...data];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            return shuffled;
+function decodeHtml(html) {
+    const txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+
+const Trivia = observer(function Trivia(props) {
+    // Base State
+    const [uiState, setUiState] = useState("TriviaStartView");
+
+    // Data States
+    const [categories, setCategories] = useState([]);
+    const [questions, setQuestions] = useState([]);
+    const [questionIndex, setQuestionIndex] = useState(0);
+    const [score, setScore] = useState(0);
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
+
+    // View Models
+    const [currentQuestionText, setCurrentQuestionText] = useState("");
+    const [currentShuffledAnswers, setCurrentShuffledAnswers] = useState([]);
+    const [currentCorrectAnswer, setCurrentCorrectAnswer] = useState("");
+
+    function writeToBottomText(message) {
+        if (props.interfaceModel) {
+            props.interfaceModel.setBoxTextTo(message);
         }
+    }
 
-        useEffect(() => {
-            if (uiState !== "categoryChoosing") return;
+    function shuffleArray(data) {
+        const shuffled = [...data];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
 
+    function setupQuestionForView(questionObj) {
+        if (!questionObj) return;
+
+        // Decode text
+        const decodedQuestion = decodeHtml(questionObj.question);
+        const decodedCorrect = decodeHtml(questionObj.correct_answer);
+        const decodedIncorrect = questionObj.incorrect_answers.map(decodeHtml);
+
+        // Shuffle answers
+        const allAnswers = [...decodedIncorrect, decodedCorrect];
+        const shuffled = shuffleArray(allAnswers);
+
+        // Update State
+        setCurrentQuestionText(decodedQuestion);
+        setCurrentCorrectAnswer(decodedCorrect);
+        setCurrentShuffledAnswers(shuffled);
+
+        // Write To Textbox
+        writeToBottomText(decodedQuestion);
+    }
+
+    useEffect(() => {
+        if (uiState !== "categoryChoosing") {
             getCategories()
                 .then(data => {
-                    const randomized = shuffleTime(data);
-                    const randomCategories = randomized.slice(0, 4);
-
-                    setCategories(randomCategories);
+                    const randomized = shuffleArray(data);
+                    setCategories(randomized.slice(0, 4));
                 })
                 .catch(error => console.error("Error fetching categories", error));
-        }, [uiState]);
+        }
+    }, [uiState]);
 
-        function chooseCategoryACB(id) {
-            chosenCategory(id).then(data => {
+    function startGameACB() {
+        setQuestionIndex(0);
+        setScore(0);
+        setUiState("categoryChoosing");
+        writeToBottomText("Please choose a category!");
+    }
+
+    function chooseCategoryACB(id) {
+        chosenCategory(id)
+            .then(data => {
                 const results = data.results || data;
-
                 if (results && results.length > 0) {
                     const gameQuestions = results.slice(0, 5);
-                    
                     setQuestions(gameQuestions);
-                    setCurrentQuestion(gameQuestions[0]);
-                    setQuestionIndex(0);
-                    setScore(0);
-                    setUiState("categoryChosen");
+                    setupQuestionForView(gameQuestions[0]);
+                    setUiState("triviaGame");
                 } else {
                     console.error("No questions found in response:", data);
                 }
             })
             .catch(console.error);
+    }
+
+    function handleAnswerACB(answer) {
+        setSelectedAnswer(answer);
+        if (answer === currentCorrectAnswer) {
+            setScore(prev => prev + 1);
+            props.userModel.buddyModel.addHappiness(10);
+        } else {
+            props.userModel.buddyModel.energyLossAfterActivity(5);
         }
+    }
 
-        function handleAnswersACB(selectedAnswer) {
-            setSelectedAnswer(selectedAnswer);
+    function handleNextQuestionACB() {
+        const nextIndex = questionIndex + 1;
 
-            if (selectedAnswer === currentQuestion.correct_answer) {
-                console.log("Correct");
-                setScore(prevScore => prevScore + 1); 
-            } else {
-                console.log("Wrong!");
-            }
-
-            if (model && selectedAnswer === currentQuestion.correct_answer) {
-            }
+        if (nextIndex < questions.length) {
+            setQuestionIndex(nextIndex);
+            setSelectedAnswer(null);
+            setupQuestionForView(questions[nextIndex]);
+        } else {
+            setUiState("gameOver");
+            setSelectedAnswer(null);
         }
+    }
 
-        function handleNextQuestionACB() {
-            const nextIndex = questionIndex + 1;
+    function backToBuddyABC() {
+        window.location.hash = "/buddy";
+    }
 
-            if (nextIndex < questions.length) {
-                setQuestionIndex(nextIndex);
-                setCurrentQuestion(questions[nextIndex]);
-                setSelectedAnswer(null);
-            } else {
-                setUiState("gameOver");
-                setCurrentQuestion(null);
-                setSelectedAnswer(null);
-            }
-        }
+    if(props.userModel.buddyModel.stats.energy <= 0){
+        writeToBottomText("Maybe we should take a break, please come back in some time and I may be fully rested up !!! ");
+        return(
+            <div className="w-full h-full">
+                <StatusBarPresenter userModel = {props.userModel}/>
+                <NoEnergyGameView></NoEnergyGameView>
+            </div>
+        );
+    }
 
-        function handleRestartACB() {
-            setUiState("categoryChoosing");
-            setScore(0);
-            setQuestions([]);
-        }
-
-        if (uiState === "gameOver") {
-            return (
-                <TriviaResultView 
-                    score={score} 
-                    total={questions.length} 
-                    onRestart={handleRestartACB} 
+    if (uiState === "categoryChoosing") {
+        return (
+            <div className="w-full h-full">
+                <StatusBarPresenter userModel = {props.userModel}/>
+                <TriviaCategoryView
+                    categories={categories}
+                    onChooseCategoryACB={chooseCategoryACB}
                 />
-            );
-        }
+            </div>
+        );
+    }
 
-        if (uiState === "categoryChosen" && currentQuestion) {
-            return (
+    if (uiState === "triviaGame") {
+        return (
+            <div className="w-full h-full">
+                <StatusBarPresenter userModel = {props.userModel}/>
                 <TriviaQuestionView
-                    question={currentQuestion}
+                    questionText={currentQuestionText}
+                    answers={currentShuffledAnswers}
+                    correctAnswer={currentCorrectAnswer}
                     selectedAnswer={selectedAnswer}
-                    onAnswer={handleAnswersACB}
+                    onAnswer={handleAnswerACB}
                     onNextQuestion={handleNextQuestionACB}
-                    currentIndex={questionIndex} // Optional: To show "Question 1/5"
+                    currentIndex={questionIndex}
                     totalQuestions={questions.length}
                 />
-            );
-        }
-
-        return (
-            <TriviaView
-                categories={categories}
-                chooseCategory={chooseCategoryACB}
-            />
+            </div>
         );
-    });
+    }
+
+    if (uiState === "gameOver") {
+        return (
+            <div className="w-full h-full">
+                <StatusBarPresenter userModel = {props.userModel}/>
+                <TriviaResultView
+                    score={score}
+                    total={questions.length}
+                    setBottomText={writeToBottomText}
+                    onRestartACB={startGameACB}
+                    onBackToBuddyABC={backToBuddyABC}
+                />
+            </div>
+        );
+    }
+
+    return (
+        <div className="w-full h-full">
+            <StatusBarPresenter userModel = {props.userModel}/>
+            <TriviaStartView
+                userModel={props.userModel}
+                setBottomText={writeToBottomText}
+                onTriviaStarterACB={startGameACB}
+            />
+        </div>
+    );
+});
 
 export { Trivia };

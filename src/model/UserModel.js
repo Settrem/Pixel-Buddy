@@ -1,6 +1,9 @@
-import { isRGBArray } from "../lib/utils";
+import { customs } from "./buddyCustomizations";
+import { isRGBArray } from "../utils/utils";
 
-const ENERGY_LOSS_PER_HOUR = 2;
+const ENERGY_GAIN_PER_HOUR = 10;
+const HUNGER_GAIN_PER_HOUR = 2;
+const HAPPINESS_LOST_PER_HOUR = 3;
 
 export const userModel = {
     user: null, //When logged in will hold uid and userName objects
@@ -11,40 +14,82 @@ export const userModel = {
         clothesHat: null,
         clothesTop: null,
         clothesBottom: null,
+        clothesShoes: null,
         stats: {
             hunger: 100,
             happiness: 100,
             energy: 100,
         },
         lastTimeInteracted: null,
-        
-        addEnergyByTime() {
-            const now = new Date();
-            const last = this.lastTimeInteracted instanceof Date
-                ? this.lastTimeInteracted
-                : new Date();
 
-            const diffMs = now - last;
+        setBuddyToNull(){
+            this.stats.energy = 100;
+            this.stats.hunger = 100; 
+            this.stats.happiness = 100;
+            this.lastTimeInteracted = new Date();
+            this.buddyType = 0;
+            this.clothesHat = 0;
+            this.clothesTop = 0;
+            this.clothesBottom = 0;
+            this.clothesShoes = 0;
+        },
+
+        statChangeOverTime(){
+            const now = new Date();
+            const last = this.lastTimeInteracted;
+            this.addEnergyByTime(now, last)
+            this.looseHungerAndHappinessByTime(now, last)
+            this.lastTimeInteracted = new Date();
+        },
+        
+        addEnergyByTime(currentTime, lastTime) {
+            console.log(lastTime);
+            const diffMs = currentTime - lastTime;
             const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-            const energyloss = diffHours * ENERGY_LOSS_PER_HOUR;
+            const energygain = diffHours * ENERGY_GAIN_PER_HOUR;
             
-            if(energyloss>0) {
-                this.stats.energy = Math.max(0, this.stats.energy - energyloss);
-                this.lastTimeInteracted = now;
-            } 
+            if(energygain>0) {
+                this.stats.energy = Math.max(0, this.stats.energy + energygain);
+            }
+        },
+
+        looseHungerAndHappinessByTime(currentTime, lastTime) {
+            console.log(lastTime);
+            const diffMs = currentTime - lastTime;
+            const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+            const hungerGained = diffHours * HUNGER_GAIN_PER_HOUR;
+            const happinessLost = diffHours * HAPPINESS_LOST_PER_HOUR;
+            
+            if(hungerGained>0) {
+                this.stats.hunger = Math.max(0, this.stats.hunger - hungerGained);
+            }
+            if(happinessLost>0) {
+                this.stats.happiness = Math.max(0, this.stats.happiness - happinessLost);
+            }
         },
         
         energyLossAfterActivity(energyTaken){
             this.stats.energy -= energyTaken;
+            this.lastTimeInteracted = new Date();
         },
     
         addHunger(hungerLevel){
             this.stats.hunger += hungerLevel;
+            this.lastTimeInteracted = new Date();
         },
     
         addHappiness(funLevel){
             this.stats.happiness += funLevel;
+            this.lastTimeInteracted = new Date();
         },
+
+        changeClothes(type, value){
+            const validTypes = ["buddyType", "clothesHat", "clothesTop", "clothesBottom", "clothesShoes"]
+            if(!validTypes.includes(type)) return;
+            this[type] += value;
+            if (this[type] > customs[type].length - 1) this[type] = 0;
+            if (this[type] < 0) this[type] = customs[type].length - 1;
+        }
     },
 
     setUiThemeTo(rgb){

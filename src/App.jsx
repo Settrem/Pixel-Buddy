@@ -7,6 +7,8 @@ import { HashRouter } from "react-router-dom";
 import { BORDERTHICKNESS } from './constants';
 import { reaction } from "mobx";
 import { Trivia } from './presenters/TriviaPresenter';
+import { Apples } from './presenters/ApplesPresenter.jsx';
+import { Help } from './presenters/HelpPresenter.jsx';
 import { useState } from 'react';
 import { connectToPersistence } from './persistence/firestoreModel';
 import { useEffect } from 'react';
@@ -14,91 +16,130 @@ import { AuthenticationPage } from './presenters/AuthenticationPage'; // create 
 import { observer } from 'mobx-react-lite';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './persistence/firestoreModel';
+import { Buddy } from './presenters/BuddyPresenter.jsx';
+import { BuddyWeather } from './presenters/BuddyWeatherPresenter.jsx';
+import { Clothes } from './presenters/ClothesPresenter.jsx';
+import { userModel } from './model/UserModel.js';
 import { Settings } from './presenters/SettingsPresenter';
+import { JokeAsBuddyWrapper } from './presenters/JokePresenter.jsx';
+import { Background } from './presenters/BackgroundPresenter.jsx';
+import { StatusBarPresenter } from './presenters/StatusBarPresenter.jsx';
+import { SettingsButtonPresenter } from './presenters/SettingsButtonPresenter.jsx';
+import { SuspenseView } from './views/SuspenseView.jsx';
+import { DeathScreenPresenter } from './presenters/DeathScreenPresenter.jsx';
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
-    { path: "settings", type: "SETTINGS", },
-    { path: "apples", type: "APPLES", },
+    { path: "clothes", type: "CLOTHES", },
+    { path: "feed", type: "FEED", },
     { path: "trivia", type: "TRIVIA", },
     { path: "joke", type: "JOKE", },
-    { path: "clothes", type: "CLOTHES", },
+    { path: "help", type: "HELP", },
 ];
 
 function makeRouter(props) {
   return createHashRouter([
     {
       path: "/",
-      element: <PixelTextBox>buddy</PixelTextBox>,   // default screen
+      element: <BuddyWeather
+        model = {props.userModel}
+        interfaceModel={props.interfaceModel}
+      />,
     },
     {
       path: "/buddy",
-      element: <PixelTextBox>buddy</PixelTextBox>,
+      element: <BuddyWeather
+        model = {props.userModel}
+        interfaceModel={props.interfaceModel}
+      />,
     },
     {
       path: "/settings",
       element: <Settings userModel = {props.userModel}/>,
     },
     {
-      path: "/apples",
-      element: <PixelTextBox>apples</PixelTextBox>,
+      path: "/help",
+      element: <Help/>,
+    },
+    {
+      path: "/feed",
+      element: <Apples 
+      interfaceModel={props.interfaceModel}
+      userModel={props.userModel}
+      />,
     },
     {
       path: "/trivia",
-      element: <Trivia/>,
+      element: <Trivia 
+      interfaceModel={props.interfaceModel}
+      userModel={props.userModel}/>,
     },
     {
       path: "/joke",
-      element: <PixelTextBox>joke</PixelTextBox>,
+      element: <JokeAsBuddyWrapper
+          key={props.interfaceModel.jokeReloadToken} 
+          userModel = {props.userModel}
+          interfaceModel={props.interfaceModel}
+        />,
     },
     {
       path: "/clothes",
-      element: <PixelTextBox>clothes</PixelTextBox>,
+      element: <Clothes
+        model = {props.userModel}
+        interfaceModel = {props.interfaceModel}
+      />,
     }
   ]);
 }
 
 const App = observer(
   function App(props) {
+    const [authUser, setAuthUser] = useState(null);
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-  
-      if (auth.currentUser) {
-        connectToPersistence(props.userModel, reaction);
-      }
-      // Listen for login/logout events
-      const unsubscribe = auth.onAuthStateChanged((user) => {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        setAuthUser(user);
+
         if (user) {
-          console.log("User logged in:", user.uid);
           connectToPersistence(props.userModel, reaction);
-        } else {
-          console.log("User logged out");
         }
-        setIsReady(true); // auth state known
+
+        setIsReady(true);
       });
-      return () => unsubscribe();
+
+      return unsubscribe;
     }, []);
 
     // Wait until we know the auth state
-    if (!isReady) return <div className="text-white">Loading...</div>;
+    if (!isReady) return <SuspenseView />;
     // No logged-in user
-    if (!props.userModel.user) return <AuthenticationPage />;
+    if (!authUser) return <AuthenticationPage />;
     // Wait until model is ready
-    if (!props.userModel.ready) return <div className="text-white">Loading user data...</div>;
+    if (!props.userModel.ready) return <SuspenseView />;
+
+    if(props.userModel.buddyModel.stats.hunger <= 0){
+      return <DeathScreenPresenter userModel = {props.userModel} ></DeathScreenPresenter>;
+    }
 
     // Logged in and model ready → show main app
     return (
       <div className="h-screen flex flex-col w-[100%]">
         <div className="flex-1 sm:max-h-[650px] flex flex-col sm:flex-row">
           <div 
-            className='flex-1 h-full border-[10px] order-0 border-black 
-              sm:order-2 sm:border-l-[10px] 
-              bg-[url("https://i.imgflip.com/6gp1di.jpg")]
-              bg-cover bg-center'        >
-            <RouterProvider router={makeRouter(props)}/>
+            className='flex-1 h-full min-h-[400px] border-[10px] 
+              order-0 sm:order-2
+            border-black  sm:border-l-[10px] 
+              relative overflow-hidden
+          '> 
+            <SettingsButtonPresenter/> 
+            <Background interfaceModel = {props.interfaceModel} />
+            <div className="relative z-10 w-full h-full"> 
+              <RouterProvider router={makeRouter(props)}/>
+            </div>
           </div>
           <Sidebar className="order-2 sm:order-1"
+            interfaceModel = {props.interfaceModel}
             sidebarButtons = {sidebarButtons}
             name = {props.userModel.buddyModel.name}
           ></Sidebar>

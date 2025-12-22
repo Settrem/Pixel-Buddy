@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { BORDERTHICKNESS } from "../../constants";
+import selection from "../../assets/sfx/selection.mp3";
+import { useRef } from "react";
+
 
 const DOUBLE = BORDERTHICKNESS * 2;
 
@@ -7,9 +10,13 @@ function PixelColorButton(props){
     const colorArray = props.color; // [84,92,158]
     const [isPressed, setIsPressed] = useState(false);
     const bgColor = isPressed ? `rgb(128,128,128)`
-  : `rgb(${colorArray[0]},${colorArray[1]},${colorArray[2]})`;
+    : `rgb(${colorArray[0]},${colorArray[1]},${colorArray[2]})`;
+
+    const audioRef = useRef(new Audio(selection));
 
     function clickButtonACB(){
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
         props.changeColorCB(props.color);
     }
 

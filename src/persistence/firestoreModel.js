@@ -9,42 +9,33 @@ const app= initializeApp(firebaseConfig);
 const db= getFirestore(app);
 const auth = getAuth(app);
 
-//auth.currentUser   The current user when logged in
 async function signUp(email, password, buddyName) {
-    try {
-        // 1. Create the Firebase Auth user
-        const userCredential = await createUserWithEmailAndPassword( auth, email, password );
-        const user = userCredential.user;
-        const userDocument = doc(db, "users", user.uid);
+    // 1. Create the Firebase Auth user
+    const userCredential = await createUserWithEmailAndPassword( auth, email, password );
+    const user = userCredential.user;
+    const userDocument = doc(db, "users", user.uid);
 
-        //set buddyname 
-        await setDoc(userDocument, {
-                user: { uid: user.uid, email: email },
-                buddyModel: {
-                    name: buddyName,
-                    buddyType: null,
-                    clothesHat: null,
-                    clothesTop: null,
-                    clothesBottom: null,
-                    stats: { hunger: 100, happiness: 100, energy: 100 },
-                    lastTimeInteracted: new Date(),
-                },
-                uiTheme: [84,92,158],
-        });
-        console.log("User created, saved, and logged in!");
-
-    } catch (error) {
-        console.error("Sign up failed:", error);
-    }
+    //set buddyname 
+    await setDoc(userDocument, {
+            user: { uid: user.uid, email: email },
+            buddyModel: {
+                name: buddyName,
+                buddyType: 0,
+                clothesHat: 0,
+                clothesTop: 0,
+                clothesBottom: 0,
+                clothesShoes: 0,
+                stats: { hunger: 20, happiness: 40, energy: 100 },
+                lastTimeInteracted: new Date(),
+            },
+            uiTheme: [84,92,158],
+    });
+    console.log("User created, saved, and logged in!");
 }
 
-async function logIn(email, password) {
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
-        console.log("Logged in successfully!");
-    } catch (error) {
-        console.error("Login error:", error);
-    }
+
+function logIn(email, password) {
+    return signInWithEmailAndPassword(auth, email, password);
 }
 
 async function logOut() {
@@ -95,7 +86,9 @@ function connectToPersistence(model, watchFunction){
             };
             model.uiTheme = data.uiTheme || [84, 92, 158];
 
+            
             model.ready = true;
+            model.buddyModel.statChangeOverTime();
 
             } catch (error) {
             console.error("Error loading Firestore model:", error);
@@ -110,21 +103,24 @@ function connectToPersistence(model, watchFunction){
             model.buddyModel.stats.hunger,
             model.buddyModel.stats.happiness,
             model.buddyModel.stats.energy,
+            model.buddyModel.buddyType,
             model.buddyModel.clothesHat,
             model.buddyModel.clothesTop,
             model.buddyModel.clothesBottom,
-            model.uiTheme
+            model.buddyModel.clothesShoes,
+            model.uiTheme,
+            model.buddyModel.lastTimeInteracted,
         ];
     }
 
     async function updateModelInDatabaseACB(){
         if(!model.ready) return;
 
-        const { name, buddyType, clothesHat, clothesTop, clothesBottom, stats, lastTimeInteracted } = model.buddyModel;
+        const { name, buddyType, clothesHat, clothesTop, clothesBottom, clothesShoes, stats, lastTimeInteracted } = model.buddyModel;
 
         const dataToSave = {
             user: model.user,
-            buddyModel: { name, buddyType, clothesHat, clothesTop, clothesBottom, stats, lastTimeInteracted },
+            buddyModel: { name, buddyType, clothesHat, clothesTop, clothesBottom, clothesShoes, stats, lastTimeInteracted },
             uiTheme: model.uiTheme,
         };
 

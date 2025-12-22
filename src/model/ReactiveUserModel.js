@@ -5,7 +5,7 @@ import { connectToPersistence } from "../persistence/firestoreModel";
 export const reactiveUserModel = observable(userModel);
 connectToPersistence(reactiveUserModel, reaction);
 
-function modelStatsChangedACB(){
+function statChangeACB(){
     return [
         reactiveUserModel.buddyModel.stats.hunger,
         reactiveUserModel.buddyModel.stats.happiness,
@@ -13,9 +13,31 @@ function modelStatsChangedACB(){
     ];
 }
 
-function updateInteractionTimeACB(){
-    return reactiveUserModel.buddyModel.lastTimeInteracted = new Date();
+function limitStatValueACB(){
+    const stats = reactiveUserModel.buddyModel.stats;
+
+    if (stats.hunger > 100) {
+        stats.hunger = 100;
+    }
+    if (stats.hunger < 0) {
+        stats.hunger = 0;
+    }
+
+    if (stats.happiness > 100) {
+        stats.happiness = 100;
+    }
+    if (stats.happiness < 0) {
+        stats.happiness = 0;
+    }
+
+    if (stats.energy > 100) {
+        stats.energy = 100;
+    }
+    if (stats.energy < 0) {
+        stats.energy = 0;
+    }
 }
+
 
 function colorChangeACB(){
     return reactiveUserModel.uiTheme;
@@ -29,7 +51,7 @@ function updateThemeColorACB(){
     )
 }
 
-reaction(modelStatsChangedACB, updateInteractionTimeACB);
+reaction(statChangeACB, limitStatValueACB)
 reaction(colorChangeACB, updateThemeColorACB)
 
 window.myModel= reactiveUserModel;

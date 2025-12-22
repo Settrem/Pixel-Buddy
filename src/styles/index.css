@@ -3,7 +3,7 @@
 
 @font-face {
   font-family: pixel; /* set name */
-  src: url(../assets/BoldPixels.otf); /* url of the font */
+  src: url(../../public/assets/BoldPixels.otf); /* url of the font */
 }
 
 :root {

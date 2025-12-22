@@ -27,21 +27,31 @@ function SidebarView(props) {
     }
 
     return (
-        <div className="bg-[var(--theme-color)] flex flex-col items-center border-[10px] border-y-0 border-black w-[100%] sm:border-y-[10px] sm:border-r-0 sm:px-[30px] sm:w-[300px] sm:h-[100%] sm:pb-[30px]">
-            
+        <div className="bg-[var(--theme-color)]
+            flex flex-col items-center
+            border-[10px] border-y-0 border-black 
+            w-[100%] sm:border-y-[10px] sm:border-r-0 sm:px-[30px] 
+            sm:w-[300px] sm:h-[100%] sm:pb-[30px]
+        ">
             <div className="text-[40px] sm:text-[60px]  sm:-mt-3">{props.name}</div>
             
             <div className="">
-                <Carousel className="w-full flex flex:row items-center sm:flex-col gap-5 sm:gap-4" orientation="vertical" opts={{ align: "start", }}>
+                <Carousel className="w-full flex flex:row items-center sm:flex-col [@media(max-width:340px)]:gap-1 gap-5 sm:gap-1" style={{imageRendering:"pixelated"}} orientation="vertical" opts={{ align: "start", }}>
                     <div>
-                        <CarouselPrevious className="relative top-0">
+                        <CarouselPrevious 
+                            className="relative top-0 rotate-270"
+                            prevImg="/assets/gfxfolder/arrow.png"
+                            prevImgDisabled="/assets/gfxfolder/arrowPressed.png">
                         </CarouselPrevious>
                     </div>
                     <CarouselContent className="-mt-[5px] h-50 sm:h-[430px] sm:gap-[0px]">
                         {[...props.sidebarButtons]?.map(renderSidebarsCB)}
                     </CarouselContent>
                     <div>
-                        <CarouselNext className="relative top-0">
+                        <CarouselNext 
+                            className="relative top-0"
+                            nextImg="/assets/gfxfolder/arrow.png"
+                            nextImgDisabled="/assets/gfxfolder/arrowPressed.png">
                         </CarouselNext>
                     </div>
                 </Carousel>
