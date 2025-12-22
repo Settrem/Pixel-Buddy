@@ -27,11 +27,10 @@ import { SettingsButtonPresenter } from './presenters/SettingsButtonPresenter.js
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
-    { path: "settings", type: "SETTINGS", },
+    { path: "clothes", type: "CLOTHES", },
     { path: "apples", type: "FEED", },
     { path: "trivia", type: "TRIVIA", },
     { path: "joke", type: "JOKE", },
-    { path: "clothes", type: "CLOTHES", },
 ];
 
 function makeRouter(props) {
