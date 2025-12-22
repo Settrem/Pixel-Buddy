@@ -18,7 +18,7 @@ export const Clothes = observer(
             }
         }
 
-        if(props.model.buddyModel.stats.energy <= 0){
+        if(props.model.buddyModel.stats.happiness <= 0){
             writeToBottomText("I'm not in the mood to change clothes right now, maybe you could cheer me up");
             return(
                 <div className="w-full h-full">
