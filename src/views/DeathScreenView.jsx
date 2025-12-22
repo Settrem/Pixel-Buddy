@@ -11,7 +11,7 @@ function DeathScreenView(props){
             <div className=" text-5xl">
                 Your buddy has sadly passed away, remember to feed your buddy! 
             </div>
-            <img className = "h-30" src="/assets/gfxfolder/grave.png" alt="RIP" />
+            <img className = "h-30" src="/assets/gfxfolder/grave.png" alt="RIP" style={{imageRendering:"pixelated"}} />
             <div className="w-max text-4xl">
                 <PixelButton btnClickCB={reviveACB}>
                     Revive Buddy
