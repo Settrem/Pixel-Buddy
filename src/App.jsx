@@ -25,6 +25,7 @@ import { Background } from './presenters/BackgroundPresenter.jsx';
 import { StatusBarPresenter } from './presenters/StatusBarPresenter.jsx';
 import { SettingsButtonPresenter } from './presenters/SettingsButtonPresenter.jsx';
 import { SuspenseView } from './views/SuspenseView.jsx';
+import { DeathScreenPresenter } from './presenters/DeathScreenPresenter.jsx';
 
 const sidebarButtons = [
     { path: "buddy", type: "BUDDY", },
@@ -109,6 +110,10 @@ const App = observer(
     if (!authUser) return <AuthenticationPage />;
     // Wait until model is ready
     if (!props.userModel.ready) return <SuspenseView />;
+
+    if(props.userModel.buddyModel.stats.hunger <= 0){
+      return <DeathScreenPresenter userModel = {props.userModel} ></DeathScreenPresenter>;
+    }
 
     // Logged in and model ready → show main app
     return (

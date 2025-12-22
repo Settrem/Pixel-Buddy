@@ -22,6 +22,18 @@ export const userModel = {
         },
         lastTimeInteracted: null,
 
+        setBuddyToNull(){
+            this.stats.energy = 100;
+            this.stats.hunger = 100; 
+            this.stats.happiness = 100;
+            this.lastTimeInteracted = new Date();
+            this.buddyType = 0;
+            this.clothesHat = 0;
+            this.clothesTop = 0;
+            this.clothesBottom = 0;
+            this.clothesShoes = 0;
+        },
+
         statChangeOverTime(){
             const now = new Date();
             const last = this.lastTimeInteracted;
