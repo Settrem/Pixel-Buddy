@@ -108,7 +108,7 @@ const App = observer(
     // No logged-in user
     if (!authUser) return <AuthenticationPage />;
     // Wait until model is ready
-    if (!props.userModel.ready) return <div className="text-white">Loading user data...</div>;
+    if (!props.userModel.ready) return <SuspenseView />;
 
     // Logged in and model ready → show main app
     return (

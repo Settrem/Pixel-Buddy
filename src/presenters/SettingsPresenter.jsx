@@ -8,6 +8,7 @@ const Settings = observer(
         const [buddyName, setBuddyName] = useState("");
         
         const colors = [
+            { rgb : [84,92,158], },
             { rgb : [255,255,255], },
             { rgb : [46,76,102], },
             { rgb : [102,46,47], },
@@ -16,6 +17,7 @@ const Settings = observer(
             { rgb : [78,46,102], },
             { rgb : [46,102,102], },
             { rgb : [135,74,37], },
+            { rgb : [102,102,102], },
         ];
 
         function changeUIColor(color){
