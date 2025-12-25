@@ -10,6 +10,9 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+# Firebase config
+src/persistence/firebaseConfig.js
+
 # Runtime data
 pids
 *.pid
