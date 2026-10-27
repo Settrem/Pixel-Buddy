@@ -1,4 +1,4 @@
-# 🐾 PixelBuddy
+# PixelBuddy
 
 Hello!
 Entrusted in your care is your very own **PixelBuddy**,  a tiny digital companion who depends entirely on you.
@@ -6,13 +6,13 @@ Raising a PixelBuddy is rewarding, but it also takes attention, commitment, and 
 
 Your PixelBuddy has **three core needs**:
 
-* 🍎 **Hunger**
-* 😊 **Happiness**
-* ⚡ **Energy**
+* **Hunger**
+* **Happiness**
+* **Energy**
 
 Keeping these needs balanced is the key to helping your PixelBuddy thrive.
 
-### 🎮 How It Works
+### How It Works
 
 Interact with your PixelBuddy through a collection of **mini-games and activities**, each affecting their well-being in different ways:
 
@@ -22,7 +22,7 @@ Interact with your PixelBuddy through a collection of **mini-games and activitie
 
 Neglecting your PixelBuddy will cause **Hunger and Happiness to slowly deplete**, while stepping away from the game allows **Energy to recover over time**.
 
-### ⚠️ Take Good Care
+### Take Good Care
 
 PixelBuddies are resilient, but not invincible!
 
@@ -30,7 +30,7 @@ PixelBuddies are resilient, but not invincible!
 * If **Hunger is fully depleted**, your PixelBuddy will not survive
 * Balancing play, rest, and care is essential for long-term companionship
 
-### 🎨 Make It Yours
+### Make It Yours
 
 Personalize your experience:
 
@@ -43,7 +43,7 @@ All settings are available through the **Settings menu**, located in the top-rig
 Your PixelBuddy is waiting.
 Take good care of them 💚
 
-## ⚙️ Technical Overview
+## Technical Overview
 
 PixelBuddy is a **state-driven game application** built using **React** and structured around the **Model–View–Presenter (MVP)** architecture. The design prioritizes clean separation of concerns, scalability, and maintainability.
 
@@ -55,14 +55,14 @@ Mini-games are implemented using **Phaser**, isolating real-time game logic from
 
 User authentication and persistence are handled via **Firebase**, while external APIs (Trivia, Weather, Jokes) enrich gameplay. Styling and responsiveness are managed with **Tailwind CSS** and custom pixel-themed UI components.
 
-## ✨ Core Features
+## Core Features
 
-* 🐶 Virtual pet with persistent stats
-* 🎮 Interactive mini-games (Trivia, Apple Catch, etc.)
-* 👕 Pet customization (clothing & appearance)
-* 🔐 User authentication (Sign up / Login)
-* 📱 Responsive UI for mobile and desktop
-* 🎨 Pixel-themed reusable UI components
+* Virtual pet with persistent stats
+* Interactive mini-games (Trivia, Apple Catch, etc.)
+* Pet customization (clothing & appearance)
+* User authentication (Sign up / Login)
+* Responsive UI for mobile and desktop
+* Pixel-themed reusable UI components
 
 ## 🛠️ Technologies Used
 
@@ -78,7 +78,7 @@ User authentication and persistence are handled via **Firebase**, while external
 * **Open Meteo API** — Fetch weather for current location
 * **JokeAPI** — Generate Jokes
 
-## 📁 Project Structure
+## Project Structure
 
 ### Root & Configuration
 
@@ -91,7 +91,7 @@ src/
 
 ```
 
-### 🧠 Model (Application State & Logic)
+### Model (Application State & Logic)
 
 ```
 src/model/
@@ -102,7 +102,7 @@ src/model/
 ├── buddyCustomization.js         # Name to link buddy clothing assets to clothes presenter
 ```
 
-### 💾 Persistence (Firebase)
+### Persistence (Firebase)
 
 ```
 src/persistence/
@@ -110,7 +110,7 @@ src/persistence/
 ├── firestoreModel.js      # Firestore ↔ Model synchronization
 ```
 
-### 🧩 Presenters (Application Logic)
+### Presenters (Application Logic)
 
 ```
 src/presenters/
@@ -135,7 +135,7 @@ src/presenters/
 
 Each presenter acts as the **middle layer**, handling logic and coordination between models and views.
 
-### 🎨 Views (UI Components)
+### Views (UI Components)
 
 ```
 src/views/
@@ -167,7 +167,7 @@ src/views/
 
 Views are **pure UI components** and contain no business logic.
 
-### 🧱 Reusable UI Components
+### Reusable UI Components
 
 ```
 src/components/ui/
@@ -181,7 +181,7 @@ src/components/ui/
 ├── carousel.jsx
 ```
 
-### 🌐 API Utilities
+### API Utilities
 
 ```
 src/utils/api_utils/
@@ -191,7 +191,7 @@ src/utils/api_utils/
 
 ```
 
-### 🎨 Styling
+### Styling
 
 ```
 src/styles/
@@ -201,7 +201,7 @@ src/styles/
 
 Styling was mainly done with Tailwind inside of the custom components and Views
 
-## 🙏 Credits
+## Credits
 
 * **Project Director** — Adar Deprem
 * **UI Design and Development** — Adar Deprem
@@ -211,7 +211,7 @@ Styling was mainly done with Tailwind inside of the custom components and Views
 * **Buddy Design** — Måns Hjalmarsson
 * **Sound Design** — Måns Hjalmarsson
 
-## 🔗Links
+## Links
 
 * **Figma UI Design:** [https://www.figma.com/design/5vWaCldDAagk4d4DuVoCqa/FrontPage?node-id=0-1&p=f&t=atYsATCqtZ8RFEth-0](https://www.figma.com/design/5vWaCldDAagk4d4DuVoCqa/FrontPage?node-id=0-1&t=atYsATCqtZ8RFEth-1)
 * **Runnint App:** [pixelbuddy-396b8.web.app](https://pixelbuddy-396b8.web.app)
