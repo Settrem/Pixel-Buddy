@@ -41,7 +41,7 @@ Personalize your experience:
 All settings are available through the **Settings menu**, located in the top-right corner of the app.
 
 Your PixelBuddy is waiting.
-Take good care of them 💚
+Take good care of them
 
 ## Technical Overview
 
@@ -64,7 +64,7 @@ User authentication and persistence are handled via **Firebase**, while external
 * Responsive UI for mobile and desktop
 * Pixel-themed reusable UI components
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 * **React + Vite** — Frontend framework and build tooling
 * **Figma** — Designing User Interface
